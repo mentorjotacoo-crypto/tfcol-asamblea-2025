@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe de Gestión 2025 — TFCOL S.A.S</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#002060;--cyan:#00A2C9;--gold:#E4C383;
+  --olive:#60870D;--lime:#90C226;--green:#00B050;
+  --white:#fff;--muted:rgba(255,255,255,.62);
+  --card:rgba(255,255,255,.06);--border:rgba(0,162,201,.28);
+}
+html,body{height:100%;width:100%;overflow:hidden;
+  font-family:'Verdana',Geneva,Tahoma,sans-serif;
+  background:var(--navy);color:var(--white)}
+
+#pbar{position:fixed;top:0;left:0;height:4px;
+  background:linear-gradient(90deg,var(--cyan),var(--lime));
+  transition:width .35s cubic-bezier(.4,0,.2,1);z-index:9999}
+
+#nav{position:fixed;bottom:22px;right:26px;z-index:9998;
+  display:flex;align-items:center;gap:10px}
+#counter{color:var(--muted);font-size:12px;min-width:46px;text-align:center}
+.nbtn{width:36px;height:36px;border-radius:50%;border:2px solid var(--cyan);
+  background:rgba(0,32,96,.85);color:var(--cyan);font-size:15px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .2s}
+.nbtn:hover{background:var(--cyan);color:var(--navy)}
+.nbtn:disabled{opacity:.28;cursor:not-allowed}
+#hint{position:fixed;bottom:22px;left:26px;z-index:9998;
+  color:var(--muted);font-size:11px}
+
+#wrap{width:100vw;height:100vh;position:relative}
+.slide{position:absolute;inset:0;padding:42px 60px 50px;
+  display:flex;flex-direction:column;
+  opacity:0;transform:translateX(36px);
+  transition:opacity .38s ease,transform .38s ease;
+  pointer-events:none;overflow:hidden}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:all}
+.slide.out-left{opacity:0;transform:translateX(-36px)}
+.slide::after{content:'';position:absolute;bottom:0;left:0;
+  width:100%;height:3px;
+  background:linear-gradient(90deg,var(--cyan),transparent)}
+
+/* COMPONENTS */
+.banner{display:inline-flex;align-items:center;
+  background:var(--cyan);padding:6px 22px;
+  border-radius:3px 18px 18px 3px;font-size:19px;
+  font-weight:700;margin-bottom:20px;align-self:flex-start}
+.sub{font-size:17px;font-weight:700;margin-bottom:12px}
+.badge{display:inline-block;padding:3px 11px;border-radius:20px;
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.bg{background:var(--green)}
+.by{background:var(--gold);color:var(--navy)}
+.bc{background:var(--cyan);color:var(--navy)}
+.bo{background:var(--olive)}
+.br{background:#C00000}
+
+table.dt{width:100%;border-collapse:collapse;font-size:13px}
+table.dt thead th{background:var(--cyan);padding:9px 13px;
+  text-align:left;font-weight:700;font-size:11px;
+  text-transform:uppercase;letter-spacing:.3px}
+table.dt tbody td{padding:8px 13px;
+  border-bottom:1px solid rgba(255,255,255,.08)}
+table.dt tbody tr:nth-child(even) td{background:rgba(255,255,255,.04)}
+table.dt .tot td{background:rgba(0,162,201,.2)!important;
+  font-weight:700;border-top:2px solid var(--cyan);border-bottom:none}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:26px;flex:1;min-height:0}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;flex:1;min-height:0}
+.g4060{display:grid;grid-template-columns:2fr 3fr;gap:26px;flex:1;min-height:0}
+.col{display:flex;flex-direction:column;gap:10px;min-height:0}
+
+.mrow{display:flex;gap:14px;margin-bottom:18px}
+.mc{flex:1;background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:14px 16px}
+.mc .lbl{font-size:10px;color:var(--lime);text-transform:uppercase;
+  letter-spacing:.6px;margin-bottom:5px}
+.mc .val{font-size:21px;font-weight:700}
+.mc .sub{font-size:11px;color:var(--muted);margin-top:3px}
+
+.ilist{display:flex;flex-direction:column;gap:5px}
+.ir{display:flex;align-items:center;justify-content:space-between;
+  padding:7px 13px;border-radius:4px;font-size:13px}
+.ir.hdr{background:var(--lime);color:var(--navy);font-weight:700}
+.ir.nrm{background:rgba(255,255,255,.07)}
+.ir.sub2{background:rgba(255,255,255,.04);padding-left:26px;color:var(--muted);font-size:12px}
+.ir.hl{background:rgba(0,176,80,.22);border-left:3px solid var(--green)}
+.ir.acc{background:rgba(0,162,201,.15);border-left:3px solid var(--cyan)}
+
+.cw{position:relative;flex:1;min-height:0;width:100%}
+
+/* COVER */
+.slide-cov{align-items:center;justify-content:center;text-align:center;
+  background:radial-gradient(ellipse at 50% 40%,#003898 0%,var(--navy) 68%)}
+.cov-logo{width:78px;height:78px;border-radius:50%;background:var(--cyan);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;font-weight:900;color:var(--navy);
+  margin:0 auto 22px;letter-spacing:-1px;
+  box-shadow:0 0 0 8px rgba(0,162,201,.18)}
+.cov-tag{background:var(--gold);color:var(--navy);
+  padding:9px 34px;font-size:21px;font-weight:700;
+  clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+  display:inline-block;margin-bottom:18px}
+.cov-title{font-size:44px;font-weight:900;line-height:1.15;margin-bottom:14px}
+.pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.pill{padding:7px 22px;border-radius:24px;font-size:14px;font-weight:700}
+.pill-c{background:var(--cyan)}
+.pill-n{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.28)}
+
+/* DIVIDER */
+.slide-div{align-items:center;justify-content:center;text-align:center;
+  background:linear-gradient(135deg,#001844,#003090)}
+.div-num{font-size:88px;font-weight:900;color:rgba(255,255,255,.06);
+  line-height:1;margin-bottom:-18px}
+.div-title{font-size:38px;font-weight:700;position:relative}
+.div-title::after{content:'';display:block;width:72px;height:4px;
+  background:var(--cyan);margin:14px auto 0}
+.div-sub{font-size:15px;color:var(--muted);margin-top:14px}
+
+/* PROJECTS LIST */
+.proj-item{display:flex;align-items:center;gap:14px;padding:11px 16px;
+  background:var(--card);border-radius:7px;border-left:4px solid var(--cyan);margin-bottom:8px}
+.proj-item .pname{flex:1;font-size:14px;font-weight:700}
+.proj-item .ploc{font-size:11px;color:var(--muted)}
+
+/* ORG CHART */
+.org{display:flex;flex-direction:column;align-items:center;flex:1;justify-content:center;gap:0}
+.org-root{background:var(--olive);padding:10px 28px;border-radius:6px;
+  font-weight:700;font-size:14px;position:relative;margin-bottom:22px}
+.org-root::after{content:'';position:absolute;bottom:-22px;left:50%;
+  transform:translateX(-50%);width:2px;height:22px;background:var(--cyan)}
+.org-row{display:flex;gap:14px;position:relative;padding-top:0}
+.org-row::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--cyan)}
+.org-grp{display:flex;flex-direction:column;align-items:center;gap:5px;
+  padding-top:22px;position:relative}
+.org-grp::before{content:'';position:absolute;top:0;left:50%;
+  transform:translateX(-50%);width:2px;height:22px;background:var(--cyan)}
+.org-co{background:var(--olive);padding:7px 12px;border-radius:5px;
+  font-weight:700;text-align:center;font-size:11px;min-width:130px;
+  position:relative}
+.org-co::after{content:'';position:absolute;bottom:-13px;left:50%;
+  transform:translateX(-50%);width:2px;height:13px;background:rgba(255,255,255,.3)}
+.org-projs{display:flex;flex-direction:column;gap:3px;margin-top:13px}
+.org-proj{background:var(--cyan);color:var(--navy);
+  padding:4px 10px;border-radius:3px;font-size:10px;text-align:center}
+.org-pct{font-size:10px;color:var(--muted);font-style:italic;
+  text-align:center;margin-top:3px}
+
+/* AGENDA */
+.agi{display:flex;align-items:center;gap:14px;padding:13px 18px;
+  border-left:4px solid var(--cyan);background:var(--card);
+  border-radius:0 8px 8px 0;margin:7px 0;font-size:15px}
+.agi-n{width:30px;height:30px;border-radius:50%;background:var(--cyan);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;flex-shrink:0;color:var(--navy)}
+
+.note{font-size:12px;color:var(--muted);font-style:italic;margin-top:8px;
+  padding:8px 12px;border-left:3px solid var(--gold);background:rgba(228,195,131,.08)}
+
+.status-box{background:rgba(255,255,255,.06);border:1px solid var(--border);
+  border-radius:8px;padding:18px 22px}
+
+.photo-ph{background:rgba(255,255,255,.04);border:2px dashed rgba(255,255,255,.13);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:8px;color:rgba(255,255,255,.3);
+  font-size:13px;min-height:140px;flex:1}
+
+hr.sep{border:none;border-top:1px solid rgba(255,255,255,.1);margin:10px 0}
+</style>
+</head>
+<body>
+<!-- PASSWORD GATE -->
+<div id="gate" style="position:fixed;inset:0;z-index:99999;
+  background:radial-gradient(ellipse at 50% 40%,#003898,#002060);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px">
+  <div style="width:72px;height:72px;border-radius:50%;background:#00A2C9;
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;font-weight:900;color:#002060;
+    box-shadow:0 0 0 10px rgba(0,162,201,.15);margin-bottom:8px">TF</div>
+  <div style="font-size:22px;font-weight:700;color:#fff">TFCOL S.A.S</div>
+  <div style="font-size:13px;color:rgba(255,255,255,.55);margin-bottom:6px">Informe de Gestion &mdash; Asamblea 2025</div>
+  <div style="display:flex;flex-direction:column;gap:10px;width:300px">
+    <input id="pin" type="password" placeholder="Ingresa la clave de acceso"
+      style="width:100%;padding:12px 16px;border-radius:8px;border:2px solid rgba(0,162,201,.4);
+        background:rgba(255,255,255,.07);color:#fff;font-size:14px;font-family:Verdana,sans-serif;
+        outline:none;text-align:center;letter-spacing:4px"
+      onkeydown="if(event.key==='Enter')checkPin()" />
+    <button onclick="checkPin()"
+      style="padding:12px;border-radius:8px;background:#00A2C9;border:none;color:#002060;
+        font-weight:700;font-size:14px;cursor:pointer;font-family:Verdana,sans-serif">
+      Acceder
+    </button>
+    <div id="pin-err" style="color:#ff9090;font-size:12px;text-align:center;min-height:16px"></div>
+  </div>
+  <div style="font-size:10px;color:rgba(255,255,255,.2);margin-top:16px">
+    Documento confidencial &mdash; uso interno
+  </div>
+</div>
+
+<script>
+function checkPin(){
+  var v=document.getElementById('pin').value.trim();
+  if(v==='Asamblea2025'){
+    document.getElementById('gate').style.display='none';
+    sessionStorage.setItem('tfcol_ok','1');
+  } else {
+    document.getElementById('pin-err').textContent='Clave incorrecta. Intenta de nuevo.';
+    document.getElementById('pin').value='';
+    document.getElementById('pin').focus();
+  }
+}
+window.addEventListener('DOMContentLoaded',function(){
+  if(sessionStorage.getItem('tfcol_ok')==='1'){
+    document.getElementById('gate').style.display='none';
+  } else {
+    setTimeout(function(){document.getElementById('pin').focus();},200);
+  }
+});
+</script>
+
+<div id="pbar"></div>
+<div id="nav">
+  <span id="counter">1 / 24</span>
+  <button class="nbtn" id="btnP" onclick="go(cur-1)">&#8592;</button>
+  <button class="nbtn" id="btnN" onclick="go(cur+1)">&#8594;</button>
+</div>
+<div id="hint">&#8592; &#8594; Teclas de flecha &nbsp;|&nbsp; Espacio = siguiente</div>
+
+<div id="wrap">
+
+<!-- ═══ 0: PORTADA ═══ -->
+<div class="slide slide-cov active" data-i="0">
+  <div class="cov-logo">TF</div>
+  <div class="cov-tag">Informe de Gestión</div>
+  <div class="cov-title">TFCOL S.A.S<br><span style="color:var(--cyan)">2025</span></div>
+  <div style="color:var(--muted);font-size:15px;margin-bottom:6px">Model and Transaction Group S.A.S</div>
+  <div class="pills">
+    <span class="pill pill-c">Asamblea General</span>
+    <span class="pill pill-n">Diciembre 2025</span>
+    <span class="pill pill-n">Resultados Anuales</span>
+  </div>
+  <div style="position:absolute;bottom:54px;left:60px;right:60px;
+    display:flex;justify-content:space-around;color:var(--muted);font-size:12px;
+    border-top:1px solid rgba(255,255,255,.1);padding-top:14px">
+    <span>Dosquebradas &nbsp;·&nbsp; Viterbo &nbsp;·&nbsp; Belalcazar</span>
+    <span>6 proyectos activos</span>
+    <span>+$45.000M en ventas acumuladas</span>
+  </div>
+</div>
+
+<!-- ═══ 1: AGENDA ═══ -->
+<div class="slide" data-i="1">
+  <div class="banner">Contenido</div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+    <div class="agi"><span class="agi-n">1</span>Presentacion de estados financieros a corte 31 de Diciembre 2025</div>
+    <div class="agi"><span class="agi-n">2</span>Estructura empresarial de los proyectos en gestion y operacion</div>
+    <div class="agi"><span class="agi-n">3</span>Senderos de Makari — Gestion Comercial y cierre proyectado 2026</div>
+    <div class="agi"><span class="agi-n">4</span>Makari Campestre — Resultado de ventas y casa modelo</div>
+    <div class="agi"><span class="agi-n">5</span>Reservas de Amanai — Nuevo proyecto, ventas iniciales</div>
+    <div class="agi"><span class="agi-n">6</span>Jardines de Makari · Tesalia · Makari Mall · SKY Black</div>
+    <div class="agi"><span class="agi-n">7</span>Consolidado de indicadores de la operacion</div>
+  </div>
+</div>
+
+<!-- ═══ NEW 2: DIVIDER EEFF ═══ -->
+<div class="slide slide-div" data-i="2">
+  <div class="div-num">00</div>
+  <div class="div-title">Estados Financieros 2025</div>
+  <div class="div-sub">Balance General &nbsp;·&nbsp; Estado de Resultados &nbsp;·&nbsp; Grupo TFCOL &nbsp;·&nbsp; Corte 31 Dic 2025</div>
+</div>
+
+<!-- ═══ NEW 3: BALANCE GENERAL ═══ -->
+<div class="slide" data-i="3">
+  <div class="banner">Balance General — Resumen</div>
+  <div style="font-size:10px;color:var(--muted);margin-bottom:10px">Cifras en millones de pesos COP (M) &nbsp;·&nbsp; Corte 31 de Diciembre 2025</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;flex:1;min-height:0">
+
+    <!-- ACTIVOS -->
+    <div style="display:flex;flex-direction:column;gap:0">
+      <div style="background:var(--cyan);color:var(--navy);font-weight:700;font-size:11px;
+        text-transform:uppercase;letter-spacing:.4px;padding:7px 10px;border-radius:4px 4px 0 0">
+        ACTIVOS
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:11px">
+        <thead>
+          <tr style="background:rgba(0,162,201,.18)">
+            <th style="padding:5px 8px;text-align:left;font-weight:600;color:var(--muted);font-size:10px">Cuenta</th>
+            <th style="padding:5px 6px;text-align:right;color:var(--muted);font-size:10px">TFCOL</th>
+            <th style="padding:5px 6px;text-align:right;color:var(--muted);font-size:10px">HABITAT</th>
+            <th style="padding:5px 6px;text-align:right;color:var(--muted);font-size:10px">NUDO</th>
+            <th style="padding:5px 6px;text-align:right;color:var(--muted);font-size:10px">KALKULO</th>
+            <th style="padding:5px 6px;text-align:right;color:var(--cyan);font-size:10px;font-weight:700">CONSOL.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:rgba(255,255,255,.04)">
+            <td style="padding:5px 8px;color:var(--muted);font-size:10px;font-style:italic" colspan="6">Activos Corrientes</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+            <td style="padding:5px 8px">Efectivo y equivalentes</td>
+            <td style="padding:5px 6px;text-align:right">61</td>
+            <td style="padding:5px 6px;text-align:right">125</td>
+            <td style="padding:5px 6px;text-align:right">133</td>
+            <td style="padding:5px 6px;text-align:right">1</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--cyan);font-weight:600">320</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)">
+            <td style="padding:5px 8px">Inversiones y act. financieros</td>
+            <td style="padding:5px 6px;text-align:right">10</td>
+            <td style="padding:5px 6px;text-align:right">93</td>
+            <td style="padding:5px 6px;text-align:right">1.308</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--cyan);font-weight:600">1.411</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+            <td style="padding:5px 8px">Cuentas por cobrar</td>
+            <td style="padding:5px 6px;text-align:right">8.091</td>
+            <td style="padding:5px 6px;text-align:right">483</td>
+            <td style="padding:5px 6px;text-align:right">223</td>
+            <td style="padding:5px 6px;text-align:right">1.042</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--cyan);font-weight:600">9.840</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)">
+            <td style="padding:5px 8px">Inventarios (obras en curso)</td>
+            <td style="padding:5px 6px;text-align:right">2.254</td>
+            <td style="padding:5px 6px;text-align:right">848</td>
+            <td style="padding:5px 6px;text-align:right">109</td>
+            <td style="padding:5px 6px;text-align:right">1.173</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--cyan);font-weight:600">4.385</td>
+          </tr>
+          <tr style="background:rgba(255,255,255,.04)">
+            <td style="padding:5px 8px;color:var(--muted);font-size:10px;font-style:italic" colspan="6">Activos No Corrientes</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+            <td style="padding:5px 8px">Propiedades, planta y equipo</td>
+            <td style="padding:5px 6px;text-align:right">101</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--cyan);font-weight:600">101</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)">
+            <td style="padding:5px 8px">Intangibles (Derechos Inmobi.)</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+            <td style="padding:5px 6px;text-align:right">4.191</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+            <td style="padding:5px 6px;text-align:right;color:var(--cyan);font-weight:600">4.191</td>
+          </tr>
+          <tr style="background:rgba(0,162,201,.18);border-top:2px solid var(--cyan)">
+            <td style="padding:7px 8px;font-weight:700">TOTAL ACTIVO</td>
+            <td style="padding:7px 6px;text-align:right;font-weight:700">10.517</td>
+            <td style="padding:7px 6px;text-align:right;font-weight:700">1.551</td>
+            <td style="padding:7px 6px;text-align:right;font-weight:700">5.964</td>
+            <td style="padding:7px 6px;text-align:right;font-weight:700">2.216</td>
+            <td style="padding:7px 6px;text-align:right;font-weight:900;color:var(--lime)">20.247</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PASIVOS + PATRIMONIO -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <!-- PASIVOS -->
+      <div>
+        <div style="background:#8B0000;color:#fff;font-weight:700;font-size:11px;
+          text-transform:uppercase;letter-spacing:.4px;padding:7px 10px;border-radius:4px 4px 0 0">
+          PASIVOS
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:11px">
+          <thead>
+            <tr style="background:rgba(139,0,0,.18)">
+              <th style="padding:5px 8px;text-align:left;font-weight:600;color:var(--muted);font-size:10px">Cuenta</th>
+              <th style="padding:5px 6px;text-align:right;color:var(--muted);font-size:10px">TFCOL</th>
+              <th style="padding:5px 6px;text-align:right;color:var(--muted);font-size:10px">HABITAT</th>
+              <th style="padding:5px 6px;text-align:right;color:var(--muted);font-size:10px">NUDO</th>
+              <th style="padding:5px 6px;text-align:right;color:var(--muted);font-size:10px">KALKULO</th>
+              <th style="padding:5px 6px;text-align:right;color:#ff9090;font-size:10px;font-weight:700">CONSOL.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+              <td style="padding:5px 8px">Obligaciones financieras</td>
+              <td style="padding:5px 6px;text-align:right">505</td>
+              <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+              <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+              <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+              <td style="padding:5px 6px;text-align:right;color:#ff9090;font-weight:600">505</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)">
+              <td style="padding:5px 8px">Proveedores</td>
+              <td style="padding:5px 6px;text-align:right">2.312</td>
+              <td style="padding:5px 6px;text-align:right">96</td>
+              <td style="padding:5px 6px;text-align:right">4.200</td>
+              <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+              <td style="padding:5px 6px;text-align:right;color:#ff9090;font-weight:600">6.608</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+              <td style="padding:5px 8px">Cuentas por pagar</td>
+              <td style="padding:5px 6px;text-align:right">1.219</td>
+              <td style="padding:5px 6px;text-align:right">36</td>
+              <td style="padding:5px 6px;text-align:right">127</td>
+              <td style="padding:5px 6px;text-align:right">2.201</td>
+              <td style="padding:5px 6px;text-align:right;color:#ff9090;font-weight:600">3.583</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)">
+              <td style="padding:5px 8px">Anticipos y otros pasivos</td>
+              <td style="padding:5px 6px;text-align:right">5.169</td>
+              <td style="padding:5px 6px;text-align:right">1.507</td>
+              <td style="padding:5px 6px;text-align:right">1.614</td>
+              <td style="padding:5px 6px;text-align:right;color:var(--muted)">—</td>
+              <td style="padding:5px 6px;text-align:right;color:#ff9090;font-weight:600">8.290</td>
+            </tr>
+            <tr style="background:rgba(139,0,0,.22);border-top:2px solid #C00000">
+              <td style="padding:7px 8px;font-weight:700">TOTAL PASIVO</td>
+              <td style="padding:7px 6px;text-align:right;font-weight:700">9.250</td>
+              <td style="padding:7px 6px;text-align:right;font-weight:700">1.644</td>
+              <td style="padding:7px 6px;text-align:right;font-weight:700">5.944</td>
+              <td style="padding:7px 6px;text-align:right;font-weight:700">2.201</td>
+              <td style="padding:7px 6px;text-align:right;font-weight:900;color:#ff6060">19.040</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- PATRIMONIO -->
+      <div>
+        <div style="background:var(--olive);color:#fff;font-weight:700;font-size:11px;
+          text-transform:uppercase;letter-spacing:.4px;padding:7px 10px;border-radius:4px 4px 0 0">
+          PATRIMONIO
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:11px">
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+              <td style="padding:5px 8px">Capital social</td>
+              <td style="padding:5px 6px;text-align:right">51</td>
+              <td style="padding:5px 6px;text-align:right">1</td>
+              <td style="padding:5px 6px;text-align:right">1</td>
+              <td style="padding:5px 6px;text-align:right">1</td>
+              <td style="padding:5px 6px;text-align:right;color:var(--lime);font-weight:600">54</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)">
+              <td style="padding:5px 8px">Resultados anteriores</td>
+              <td style="padding:5px 6px;text-align:right">1.243</td>
+              <td style="padding:5px 6px;text-align:right">10</td>
+              <td style="padding:5px 6px;text-align:right;color:#ff9090">(7)</td>
+              <td style="padding:5px 6px;text-align:right;color:#ff9090">(15)</td>
+              <td style="padding:5px 6px;text-align:right;color:var(--lime);font-weight:600">1.231</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+              <td style="padding:5px 8px">Resultado del ejercicio 2025</td>
+              <td style="padding:5px 6px;text-align:right;color:#ff9090">(27)</td>
+              <td style="padding:5px 6px;text-align:right;color:#ff9090">(104)</td>
+              <td style="padding:5px 6px;text-align:right;color:var(--green)">26</td>
+              <td style="padding:5px 6px;text-align:right;color:var(--green)">44</td>
+              <td style="padding:5px 6px;text-align:right;color:#ff9090;font-weight:600">(42)</td>
+            </tr>
+            <tr style="background:rgba(96,135,13,.3);border-top:2px solid var(--olive)">
+              <td style="padding:7px 8px;font-weight:700">TOTAL PATRIMONIO</td>
+              <td style="padding:7px 6px;text-align:right;font-weight:700">1.268</td>
+              <td style="padding:7px 6px;text-align:right;font-weight:700;color:#ff9090">(94)</td>
+              <td style="padding:7px 6px;text-align:right;font-weight:700;color:var(--green)">20</td>
+              <td style="padding:7px 6px;text-align:right;font-weight:700;color:var(--green)">31</td>
+              <td style="padding:7px 6px;text-align:right;font-weight:900;color:var(--lime)">1.225</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- grid -->
+</div>
+
+<!-- ═══ NEW 4: ESTADO DE RESULTADOS ═══ -->
+<div class="slide" data-i="4">
+  <div class="banner">Estado de Resultados — Resumen</div>
+  <div style="font-size:10px;color:var(--muted);margin-bottom:10px">Cifras en millones de pesos COP (M) &nbsp;·&nbsp; Periodo: Enero — Diciembre 2025</div>
+  <table style="width:100%;border-collapse:collapse;font-size:12px;flex:1">
+    <thead>
+      <tr>
+        <th style="background:rgba(0,162,201,.25);padding:8px 12px;text-align:left;font-size:11px;font-weight:700;border-bottom:2px solid var(--cyan)">Cuenta</th>
+        <th style="background:rgba(0,162,201,.25);padding:8px 10px;text-align:right;font-size:11px;color:var(--muted);border-bottom:2px solid var(--cyan)">TFCOL S.A.S</th>
+        <th style="background:rgba(0,162,201,.25);padding:8px 10px;text-align:right;font-size:11px;color:var(--muted);border-bottom:2px solid var(--cyan)">TFCOL HABITAT</th>
+        <th style="background:rgba(0,162,201,.25);padding:8px 10px;text-align:right;font-size:11px;color:var(--muted);border-bottom:2px solid var(--cyan)">NUDO CONSTR.</th>
+        <th style="background:rgba(0,162,201,.25);padding:8px 10px;text-align:right;font-size:11px;color:var(--muted);border-bottom:2px solid var(--cyan)">KALKULO</th>
+        <th style="background:rgba(0,162,201,.25);padding:8px 10px;text-align:right;font-size:11px;color:var(--cyan);font-weight:700;border-bottom:2px solid var(--cyan)">CONSOLIDADO</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- INGRESOS -->
+      <tr style="background:rgba(0,176,80,.1)">
+        <td colspan="6" style="padding:5px 12px;font-size:10px;color:var(--lime);font-weight:700;text-transform:uppercase;letter-spacing:.5px">INGRESOS</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+        <td style="padding:7px 12px;padding-left:22px">Ingresos operacionales</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green)">1.536</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted)">—</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted)">—</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted)">—</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:600">1.536</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)">
+        <td style="padding:7px 12px;padding-left:22px">Ingresos no operacionales</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green)">142</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green)">11</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green)">126</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green)">1.001</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:600">1.280</td>
+      </tr>
+      <tr style="background:rgba(0,176,80,.18);border-top:1px solid rgba(0,176,80,.4)">
+        <td style="padding:8px 12px;font-weight:700">TOTAL INGRESOS</td>
+        <td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--green)">1.678</td>
+        <td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--green)">11</td>
+        <td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--green)">126</td>
+        <td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--green)">1.001</td>
+        <td style="padding:8px 10px;text-align:right;font-weight:900;color:var(--lime)">2.816</td>
+      </tr>
+      <!-- COSTOS -->
+      <tr style="background:rgba(192,0,0,.1)">
+        <td colspan="6" style="padding:5px 12px;font-size:10px;color:#ff9090;font-weight:700;text-transform:uppercase;letter-spacing:.5px">COSTOS Y GASTOS</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+        <td style="padding:7px 12px;padding-left:22px">Costo de ventas / construccion</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(1.490)</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted)">—</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted)">—</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(950)</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090;font-weight:600">(2.440)</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)">
+        <td style="padding:7px 12px;padding-left:22px">Gastos de administracion</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(103)</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(75)</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(54)</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(6)</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090;font-weight:600">(238)</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+        <td style="padding:7px 12px;padding-left:22px">Gastos de ventas</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(21)</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted)">—</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted)">—</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted)">—</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090;font-weight:600">(21)</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)">
+        <td style="padding:7px 12px;padding-left:22px">Gastos no operacionales</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(62)</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(40)</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(42)</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(1)</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090;font-weight:600">(145)</td>
+      </tr>
+      <tr style="background:rgba(192,0,0,.2);border-top:1px solid rgba(192,0,0,.5)">
+        <td style="padding:8px 12px;font-weight:700">TOTAL COSTOS Y GASTOS</td>
+        <td style="padding:8px 10px;text-align:right;font-weight:700;color:#ff9090">(1.676)</td>
+        <td style="padding:8px 10px;text-align:right;font-weight:700;color:#ff9090">(115)</td>
+        <td style="padding:8px 10px;text-align:right;font-weight:700;color:#ff9090">(96)</td>
+        <td style="padding:8px 10px;text-align:right;font-weight:700;color:#ff9090">(957)</td>
+        <td style="padding:8px 10px;text-align:right;font-weight:900;color:#ff6060">(2.844)</td>
+      </tr>
+      <!-- RESULTADOS -->
+      <tr style="background:rgba(0,162,201,.1)">
+        <td colspan="6" style="padding:5px 12px;font-size:10px;color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.5px">RESULTADO</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+        <td style="padding:7px 12px;padding-left:22px">Utilidad antes de impuesto</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green)">2</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(104)</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green)">30</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green)">44</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090;font-weight:600">(28)</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)">
+        <td style="padding:7px 12px;padding-left:22px">Impuesto de renta</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(10)</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted)">—</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090">(4)</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted)">—</td>
+        <td style="padding:7px 10px;text-align:right;color:#ff9090;font-weight:600">(14)</td>
+      </tr>
+      <tr style="background:rgba(0,162,201,.22);border-top:2px solid var(--cyan)">
+        <td style="padding:9px 12px;font-weight:700;font-size:13px">UTILIDAD NETA</td>
+        <td style="padding:9px 10px;text-align:right;font-weight:700;color:#ff9090">(8)</td>
+        <td style="padding:9px 10px;text-align:right;font-weight:700;color:#ff9090">(104)</td>
+        <td style="padding:9px 10px;text-align:right;font-weight:700;color:var(--green)">26</td>
+        <td style="padding:9px 10px;text-align:right;font-weight:700;color:var(--green)">44</td>
+        <td style="padding:9px 10px;text-align:right;font-weight:900;font-size:14px;color:#ff6060">(42)</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:10px;color:var(--muted);margin-top:8px;font-style:italic">
+    Nota: TFCOL HABITAT presenta perdida operacional por proyectos en etapa de construccion. Nudo y Kalkulo reportan utilidad neta positiva.
+  </div>
+</div>
+
+<!-- ═══ 2: ESTRUCTURA EMPRESARIAL ═══ -->
+<div class="slide" data-i="2">
+  <div class="banner">Estructura Empresarial</div>
+  <div class="org">
+    <div class="org-root">TFCOL S.A.S</div>
+    <div class="org-row">
+      <div class="org-grp">
+        <div class="org-co">TFCOL HABITAT S.A.S</div>
+        <div class="org-pct">100% TFCOL</div>
+        <div class="org-projs">
+          <div class="org-proj">Estudios y disenos</div>
+          <div class="org-proj">Construccion viviendas</div>
+        </div>
+      </div>
+      <div class="org-grp">
+        <div class="org-co">NUDO CONSTRUCCIONES S.A.S</div>
+        <div class="org-pct">100% TFCOL</div>
+        <div class="org-projs">
+          <div class="org-proj">Senderos de Makari</div>
+          <div class="org-proj">Jardines de Makari</div>
+          <div class="org-proj">Reservas de Amanai (5%)</div>
+        </div>
+      </div>
+      <div class="org-grp">
+        <div class="org-co">KALKULO S.A.S</div>
+        <div class="org-pct">100% TFCOL</div>
+        <div class="org-projs">
+          <div class="org-proj">Makari Campestre</div>
+          <div class="org-proj">Tesalia</div>
+        </div>
+      </div>
+      <div class="org-grp">
+        <div class="org-co">MAKARI MALL S.A.S</div>
+        <div class="org-pct">Mixto — 60% KALKULO / 40% MTG</div>
+        <div class="org-projs">
+          <div class="org-proj">Makari Mall</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 3: PROYECTOS OVERVIEW ═══ -->
+<div class="slide" data-i="3">
+  <div class="banner">Proyectos — Estado Actual</div>
+  <div class="g2">
+    <div class="col">
+      <div class="proj-item">
+        <span style="font-size:22px">&#127968;</span>
+        <div><div class="pname">Senderos de Makari</div><div class="ploc">Dosquebradas</div></div>
+        <span class="badge bg">Terminando</span>
+      </div>
+      <div class="proj-item">
+        <span style="font-size:22px">&#127956;</span>
+        <div><div class="pname">Makari Campestre</div><div class="ploc">Dosquebradas</div></div>
+        <span class="badge bc">Activo</span>
+      </div>
+      <div class="proj-item" style="border-left-color:var(--gold)">
+        <span style="font-size:22px">&#10024;</span>
+        <div><div class="pname">Reservas de Amanai</div><div class="ploc">Dosquebradas — <strong>Nuevo Proyecto</strong></div></div>
+        <span class="badge by">Nuevo</span>
+      </div>
+      <div class="proj-item">
+        <span style="font-size:22px">&#127958;</span>
+        <div><div class="pname">TFCOL HABITAT S.A.S</div><div class="ploc">Estudios y disenos</div></div>
+        <span class="badge bc">Activo</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="proj-item">
+        <span style="font-size:22px">&#127968;</span>
+        <div><div class="pname">Jardines de Makari</div><div class="ploc">Viterbo</div></div>
+        <span class="badge br">Pausa</span>
+      </div>
+      <div class="proj-item">
+        <span style="font-size:22px">&#127807;</span>
+        <div><div class="pname">Tesalia Campestre</div><div class="ploc">Belalcazar</div></div>
+        <span class="badge by">Estudios</span>
+      </div>
+      <div class="proj-item">
+        <span style="font-size:22px">&#127978;</span>
+        <div><div class="pname">Makari Mall</div><div class="ploc">Dosquebradas</div></div>
+        <span class="badge bc">Estructuracion</span>
+      </div>
+      <div class="proj-item">
+        <span style="font-size:22px">&#127970;</span>
+        <div><div class="pname">SKY Black</div><div class="ploc">—</div></div>
+        <span class="badge br">Pausa</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 4: DIVIDER SENDEROS ═══ -->
+<div class="slide slide-div" data-i="4">
+  <div class="div-num">01</div>
+  <div class="div-title">Senderos de Makari</div>
+  <div class="div-sub">Dosquebradas &nbsp;·&nbsp; NUDO CONSTRUCCIONES S.A.S &nbsp;·&nbsp; 100% TFCOL</div>
+</div>
+
+<!-- ═══ 5: SENDEROS STATUS ═══ -->
+<div class="slide" data-i="5">
+  <div class="banner">Senderos de Makari</div>
+  <div class="mrow">
+    <div class="mc">
+      <div class="lbl">Viviendas Terminadas</div>
+      <div class="val" style="color:var(--green)">52</div>
+      <div class="sub">Unidades entregadas</div>
+    </div>
+    <div class="mc">
+      <div class="lbl">En Proceso</div>
+      <div class="val" style="color:var(--gold)">12</div>
+      <div class="sub">En construccion</div>
+    </div>
+    <div class="mc">
+      <div class="lbl">Total Unidades Vendidas</div>
+      <div class="val">254</div>
+      <div class="sub">Acumulado 2019–2025</div>
+    </div>
+    <div class="mc">
+      <div class="lbl">Estado General</div>
+      <div class="val" style="font-size:14px;margin-top:6px"><span class="badge bg">100% Terminado</span></div>
+      <div class="sub">Cierre financiero 2026</div>
+    </div>
+  </div>
+  <div class="g2" style="flex:1">
+    <div class="status-box" style="display:flex;flex-direction:column;justify-content:center;gap:12px">
+      <div class="sub">Avance del Proyecto</div>
+      <div style="height:10px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden">
+        <div style="width:96%;height:100%;background:linear-gradient(90deg,var(--green),var(--lime));border-radius:6px"></div>
+      </div>
+      <div style="font-size:12px;color:var(--muted)">96% de construccion completada</div>
+      <hr class="sep">
+      <div style="font-size:13px;margin-bottom:6px;font-weight:700">Hitos clave</div>
+      <div class="ilist">
+        <div class="ir nrm"><span>Inicio de ventas</span><span style="color:var(--cyan)">2019</span></div>
+        <div class="ir nrm"><span>Pico de ventas</span><span style="color:var(--lime)">2021 — 71 unidades</span></div>
+        <div class="ir nrm"><span>52 viviendas terminadas</span><span class="badge bg">Entregadas</span></div>
+        <div class="ir acc"><span>Cierre financiero proyectado</span><span style="color:var(--gold)">2026</span></div>
+      </div>
+    </div>
+    <div class="photo-ph">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+      <span>Fotografias del proyecto</span>
+      <span style="font-size:11px">Disponibles en el archivo PPTX original</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 6: SENDEROS COMERCIAL ═══ -->
+<div class="slide" data-i="6">
+  <div class="banner">Senderos de Makari</div>
+  <div class="sub">Gestion Comercial 2019–2025</div>
+  <div class="g4060">
+    <div class="col">
+      <table class="dt">
+        <thead><tr><th>Ano</th><th>Ventas (COP)</th><th>Unidades</th></tr></thead>
+        <tbody>
+          <tr><td>2019</td><td>$ 2.378.466.508</td><td>35</td></tr>
+          <tr><td>2020</td><td>$ 4.159.770.701</td><td>60</td></tr>
+          <tr><td>2021</td><td>$ 5.402.775.626</td><td>71</td></tr>
+          <tr><td>2022</td><td>$ 4.545.215.562</td><td>62</td></tr>
+          <tr><td>2023</td><td>$ 722.440.280</td><td>9</td></tr>
+          <tr><td>2024</td><td>$ 1.301.455.299</td><td>10</td></tr>
+          <tr><td>2025</td><td>$ 1.132.233.028</td><td>7</td></tr>
+          <tr class="tot"><td>Total</td><td>$ 19.642.357.004</td><td>254</td></tr>
+        </tbody>
+      </table>
+      <div class="note">Proceso de cierre financiero proyectado para el 2026.</div>
+    </div>
+    <div class="cw"><canvas id="c-senderos"></canvas></div>
+  </div>
+</div>
+
+<!-- ═══ 7: DIVIDER MAKARI CAMPESTRE ═══ -->
+<div class="slide slide-div" data-i="7">
+  <div class="div-num">02</div>
+  <div class="div-title">Makari Campestre</div>
+  <div class="div-sub">Dosquebradas &nbsp;·&nbsp; KALKULO S.A.S &nbsp;·&nbsp; 100% TFCOL</div>
+</div>
+
+<!-- ═══ 8: MAKARI CAMPESTRE COMERCIAL ═══ -->
+<div class="slide" data-i="8">
+  <div class="banner">Makari Campestre</div>
+  <div class="sub">Gestion Comercial 2022–2025</div>
+  <div class="g4060">
+    <div class="col">
+      <table class="dt">
+        <thead><tr><th>Ano</th><th>Lotes</th><th>Ventas (COP)</th></tr></thead>
+        <tbody>
+          <tr><td>2022</td><td>15</td><td>$ 4.719.777.053</td></tr>
+          <tr><td>2023</td><td>7</td><td>$ 1.735.117.389</td></tr>
+          <tr><td>2024</td><td>19</td><td>$ 4.595.263.549</td></tr>
+          <tr><td>2025</td><td>25</td><td>$ 7.504.052.783</td></tr>
+          <tr class="tot"><td>Total</td><td>66</td><td>$ 18.554.210.774</td></tr>
+        </tbody>
+      </table>
+      <div class="mrow" style="margin-top:14px;margin-bottom:0">
+        <div class="mc">
+          <div class="lbl">Mejor ano</div>
+          <div class="val">2025</div>
+          <div class="sub">25 lotes — $7.504M</div>
+        </div>
+        <div class="mc">
+          <div class="lbl">Crecimiento 25 vs 24</div>
+          <div class="val" style="color:var(--green)">+63%</div>
+          <div class="sub">En unidades vendidas</div>
+        </div>
+      </div>
+    </div>
+    <div class="cw"><canvas id="c-campestre"></canvas></div>
+  </div>
+</div>
+
+<!-- ═══ 9: CASA MODELO ═══ -->
+<div class="slide" data-i="9">
+  <div class="banner">Makari Campestre — Casa Modelo</div>
+  <div class="g2">
+    <div class="col">
+      <div class="status-box" style="flex:1">
+        <div class="sub" style="margin-bottom:14px">Construccion Casa Modelo</div>
+        <div class="ilist">
+          <div class="ir hdr"><span>Presupuesto a costo directo</span></div>
+          <div class="ir acc"><span>Casa con piscina</span><span style="font-weight:700">$ 196.750.000</span></div>
+          <div class="ir nrm"><span>Area construida</span><span>94,52 m2</span></div>
+          <div class="ir nrm"><span>Tipologia</span><span>Campestre + piscina</span></div>
+        </div>
+        <hr class="sep" style="margin-top:16px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">Progreso de obra</div>
+        <div style="display:flex;gap:14px">
+          <div class="mc" style="text-align:center">
+            <div class="lbl">Inicio</div>
+            <div class="val" style="font-size:16px">Oct 2024</div>
+          </div>
+          <div style="display:flex;align-items:center;color:var(--cyan);font-size:20px">&#8594;</div>
+          <div class="mc" style="text-align:center">
+            <div class="lbl">Avance</div>
+            <div class="val" style="font-size:16px">Dic 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="photo-ph" style="min-height:200px">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Casa Modelo Makari Campestre</span>
+      <span style="font-size:11px">Fotos Oct 2024 — Dic 2024 en PPTX</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 10: DIVIDER RESERVAS ═══ -->
+<div class="slide slide-div" data-i="10">
+  <div class="div-num">03</div>
+  <div class="div-title">Reservas de Amanai</div>
+  <div class="div-sub">Dosquebradas &nbsp;·&nbsp; Nuevo Proyecto &nbsp;·&nbsp; TFCOL 5% &nbsp;·&nbsp; Lanzamiento Dic 2025</div>
+</div>
+
+<!-- ═══ 11: RESERVAS COMERCIAL ═══ -->
+<div class="slide" data-i="11">
+  <div class="banner">Reservas de Amanai</div>
+  <div class="sub">Gestion Comercial — Dic 2025 a Feb 2026</div>
+  <div class="mrow">
+    <div class="mc">
+      <div class="lbl">Ventas totales</div>
+      <div class="val" style="color:var(--lime)">$7.547M</div>
+      <div class="sub">COP acumulado</div>
+    </div>
+    <div class="mc">
+      <div class="lbl">m2 vendidos</div>
+      <div class="val">3.715 m2</div>
+      <div class="sub">Solo 3 meses de operacion</div>
+    </div>
+    <div class="mc">
+      <div class="lbl">Mejor mes</div>
+      <div class="val">Dic 2025</div>
+      <div class="sub">$4.146M — 2.036 m2</div>
+    </div>
+    <div class="mc">
+      <div class="lbl">Estado</div>
+      <div class="val" style="font-size:13px;margin-top:6px"><span class="badge by">Nuevo Proyecto</span></div>
+      <div class="sub">Lanzado Dic 2025</div>
+    </div>
+  </div>
+  <div class="g4060" style="flex:1">
+    <div class="col">
+      <table class="dt">
+        <thead><tr><th>Periodo</th><th>Ventas (COP)</th><th>m2 vendidos</th></tr></thead>
+        <tbody>
+          <tr><td colspan="3" style="background:rgba(0,162,201,.1);font-size:11px;color:var(--muted);padding:4px 13px">2025</td></tr>
+          <tr><td>Diciembre</td><td>$ 4.146.429.273</td><td>2.036</td></tr>
+          <tr><td colspan="3" style="background:rgba(0,162,201,.1);font-size:11px;color:var(--muted);padding:4px 13px">2026</td></tr>
+          <tr><td>Enero</td><td>$ 2.051.397.636</td><td>1.019</td></tr>
+          <tr><td>Febrero</td><td>$ 1.349.580.000</td><td>660</td></tr>
+          <tr class="tot"><td>Total</td><td>$ 7.547.406.909</td><td>3.715</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cw"><canvas id="c-amanai"></canvas></div>
+  </div>
+</div>
+
+<!-- ═══ 12: DIVIDER JARDINES ═══ -->
+<div class="slide slide-div" data-i="12">
+  <div class="div-num">04</div>
+  <div class="div-title">Jardines de Makari</div>
+  <div class="div-sub">Viterbo &nbsp;·&nbsp; NUDO CONSTRUCCIONES S.A.S &nbsp;·&nbsp; 100% TFCOL</div>
+</div>
+
+<!-- ═══ 13: JARDINES ═══ -->
+<div class="slide" data-i="13">
+  <div class="banner">Jardines de Makari</div>
+  <div class="g2">
+    <div class="col">
+      <div class="status-box" style="flex:1">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div class="sub" style="margin-bottom:0">Estado del Proyecto</div>
+          <span class="badge br">En Pausa</span>
+        </div>
+        <div class="note" style="margin-bottom:14px">
+          Proyecto en pausa por proceso de correccion de areas del IGAAC y replanteamiento segun gestion comercial.
+        </div>
+        <hr class="sep">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">Proyecciones Financieras</div>
+        <div class="ilist">
+          <div class="ir hdr"><span>Ingresos proyectados</span><span>$ 3.676 M</span></div>
+          <div class="ir nrm"><span>Total Costos</span><span>$ 2.110 M</span></div>
+          <div class="ir sub2"><span>Costos Directos</span><span>$ 1.296 M</span></div>
+          <div class="ir sub2"><span>Costos Indirectos</span><span>$ 239 M</span></div>
+          <div class="ir sub2"><span>Costo Lote</span><span>$ 575 M</span></div>
+          <div class="ir hl"><span>Utilidad antes impuestos</span><span style="font-weight:700">$ 1.566 M</span></div>
+        </div>
+        <div class="note">La proyeccion por venta de viviendas no ha sido tenida en cuenta en esta fase.</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="status-box" style="flex:1">
+        <div class="sub">Caracteristicas del Lote</div>
+        <div class="ilist" style="margin-top:10px">
+          <div class="ir hdr"><span>Area Bruta Total</span><span>4.358 m2</span></div>
+          <div class="ir acc"><span>Zona Residencial</span></div>
+          <div class="ir sub2"><span>34 Lotes</span><span>73,07 m2 / lote</span></div>
+          <div class="ir sub2"><span>Precio</span><span style="color:var(--lime)">$1.250.491/m2</span></div>
+          <div class="ir acc"><span>Zona Comercial</span></div>
+          <div class="ir sub2"><span>12 locales + terraza</span><span>13,66 m2</span></div>
+          <div class="ir sub2"><span>Precio</span><span style="color:var(--lime)">$2.008.032/m2</span></div>
+          <div class="ir nrm"><span>Servicios publicos</span><span class="badge bc">Incluidos</span></div>
+          <div class="ir nrm"><span>Conjunto cerrado</span><span class="badge bc">Si</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 14: DIVIDER TESALIA ═══ -->
+<div class="slide slide-div" data-i="14">
+  <div class="div-num">05</div>
+  <div class="div-title">Tesalia Campestre</div>
+  <div class="div-sub">Belalcazar &nbsp;·&nbsp; KALKULO S.A.S &nbsp;·&nbsp; Fase de Estudios</div>
+</div>
+
+<!-- ═══ 15: TESALIA ═══ -->
+<div class="slide" data-i="15">
+  <div class="banner">Tesalia Campestre</div>
+  <div class="g2">
+    <div class="col">
+      <div class="status-box" style="flex:1">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div class="sub" style="margin-bottom:0">Modelo de Comercializacion</div>
+          <span class="badge by">En Estudios</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">
+          Se comercializara a traves de un fraccionado mixto con 3 operaciones independientes:
+        </p>
+        <div class="ilist">
+          <div class="ir acc">Habitacional</div>
+          <div class="ir acc">Industrial — Estacion de Servicios (EDS)</div>
+          <div class="ir acc">Comercial — Restaurante</div>
+        </div>
+        <div class="note" style="margin-top:14px">Datos sujetos a modificaciones por viabilidad de la nueva estructura del proyecto.</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="status-box" style="flex:1">
+        <div class="sub">Caracteristicas del Proyecto</div>
+        <div class="ilist" style="margin-top:10px">
+          <div class="ir hdr"><span>Area Bruta</span><span>25.635 m2</span></div>
+          <div class="ir acc"><span>Viviendas Ecoturisticas</span></div>
+          <div class="ir sub2"><span>36 Lotes</span><span>238 m2 promedio</span></div>
+          <div class="ir acc"><span>Zona Comercial</span><span>518 m2</span></div>
+          <div class="ir acc"><span>Zona Estacion de Servicios</span><span>1.987 m2</span></div>
+        </div>
+      </div>
+      <div class="photo-ph">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        <span>Plano del terreno disponible en PPTX</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 16: DIVIDER MAKARI MALL ═══ -->
+<div class="slide slide-div" data-i="16">
+  <div class="div-num">06</div>
+  <div class="div-title">Makari Mall</div>
+  <div class="div-sub">Dosquebradas &nbsp;·&nbsp; MAKARI MALL S.A.S &nbsp;·&nbsp; 60% KALKULO / 40% MTG</div>
+</div>
+
+<!-- ═══ 17: MAKARI MALL ═══ -->
+<div class="slide" data-i="17">
+  <div class="banner">Makari Mall</div>
+  <div class="g2">
+    <div class="col">
+      <div class="status-box" style="flex:1">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div class="sub" style="margin-bottom:0">Avance del Proyecto</div>
+          <span class="badge bc">En Estructuracion</span>
+        </div>
+        <div class="ilist">
+          <div class="ir hl">Constitucion de la sociedad Makari Mall S.A.S</div>
+          <div class="ir hl">Estudios tecnicos del mall</div>
+          <div class="ir nrm">Constitucion Fideicomiso Inmobiliario Makari Mall</div>
+          <div class="ir nrm">Desarrollo de ventas por acciones</div>
+          <div class="ir nrm">Esquema de ventas y proyeccion</div>
+        </div>
+        <hr class="sep" style="margin-top:16px">
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">
+          Cuenta con Estructurador y Constructor identificados.
+        </div>
+      </div>
+    </div>
+    <div class="photo-ph" style="min-height:200px">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><rect x="9" y="14" width="6" height="7"/><rect x="4" y="11" width="3" height="4"/><rect x="17" y="11" width="3" height="4"/></svg>
+      <span>Renders del Mall disponibles en PPTX</span>
+      <span style="font-size:11px">Fachada y planos arquitectonicos</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 18: DIVIDER SKY BLACK ═══ -->
+<div class="slide slide-div" data-i="18">
+  <div class="div-num">07</div>
+  <div class="div-title">SKY Black</div>
+  <div class="div-sub">Proyecto en pausa — Saneamiento de propietarios anteriores</div>
+</div>
+
+<!-- ═══ 19: SKY BLACK ═══ -->
+<div class="slide" data-i="19">
+  <div class="banner">SKY Black</div>
+  <div class="g2">
+    <div class="col">
+      <div class="status-box" style="flex:1">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div class="sub" style="margin-bottom:0">Estado del Proyecto</div>
+          <span class="badge br">En Pausa</span>
+        </div>
+        <div class="note">
+          Proyecto en pausa por proceso de saneamiento de los propietarios anteriores.
+        </div>
+        <hr class="sep" style="margin-top:16px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">Zonas Sociales Proyectadas</div>
+        <div class="ilist">
+          <div class="ir nrm">Sala de Juegos / Coworking</div>
+          <div class="ir nrm">Jacuzzi</div>
+          <div class="ir nrm">Lobby — CoffeeShop</div>
+          <div class="ir nrm">Gimnasio — Sala de Yoga</div>
+        </div>
+      </div>
+    </div>
+    <div class="photo-ph" style="min-height:200px">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      <span>Renders SKY Black disponibles en PPTX</span>
+      <span style="font-size:11px">Fachada y zonas sociales</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 20: EEFF ═══ -->
+<div class="slide" data-i="20">
+  <div class="banner">Estados Financieros — Dic 2025</div>
+  <div class="g2">
+    <div class="status-box" style="display:flex;flex-direction:column;justify-content:center;gap:14px">
+      <div class="sub">TFCOL S.A.S</div>
+      <div class="note">Ver archivo adjunto: <strong>EEFF TFCOL 2025.pdf</strong></div>
+      <div class="ilist">
+        <div class="ir acc"><span>Corte</span><span>31 Diciembre 2025</span></div>
+        <div class="ir nrm"><span>Entidad</span><span>TFCOL S.A.S</span></div>
+        <div class="ir nrm"><span>Tipo</span><span>Estados Financieros Completos</span></div>
+      </div>
+    </div>
+    <div class="status-box" style="display:flex;flex-direction:column;justify-content:center;gap:14px">
+      <div class="sub">NUDO CONSTRUCCIONES S.A.S</div>
+      <div class="note">Ver archivo adjunto: <strong>EEFF Nudo Construcciones 2025.pdf</strong></div>
+      <div class="ilist">
+        <div class="ir acc"><span>Corte</span><span>31 Diciembre 2025</span></div>
+        <div class="ir nrm"><span>Entidad</span><span>Nudo Construcciones S.A.S</span></div>
+        <div class="ir nrm"><span>Tipo</span><span>Estados Financieros Completos</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="note" style="margin-top:16px">
+    Los documentos PDF con los estados financieros completos se encuentran en la carpeta de soporte de esta presentacion.
+  </div>
+</div>
+
+<!-- ═══ 21: CONSOLIDADO DE VENTAS ═══ -->
+<div class="slide" data-i="21">
+  <div class="banner">Consolidado de Ventas — Todos los Proyectos</div>
+  <div class="mrow">
+    <div class="mc">
+      <div class="lbl">Senderos de Makari</div>
+      <div class="val">$19.642M</div>
+      <div class="sub">254 unidades — 2019–2025</div>
+    </div>
+    <div class="mc">
+      <div class="lbl">Makari Campestre</div>
+      <div class="val">$18.554M</div>
+      <div class="sub">66 lotes — 2022–2025</div>
+    </div>
+    <div class="mc">
+      <div class="lbl">Reservas de Amanai</div>
+      <div class="val" style="color:var(--lime)">$7.547M</div>
+      <div class="sub">3.715 m2 — solo 3 meses</div>
+    </div>
+    <div class="mc" style="border-color:var(--gold)">
+      <div class="lbl">Total estimado</div>
+      <div class="val" style="color:var(--gold)">~$45.743M</div>
+      <div class="sub">COP acumulado</div>
+    </div>
+  </div>
+  <div class="cw"><canvas id="c-consol"></canvas></div>
+</div>
+
+<!-- ═══ 22: DIVIDER INDICADORES ═══ -->
+<div class="slide slide-div" data-i="22">
+  <div class="div-num">08</div>
+  <div class="div-title">Indicadores de la Operacion</div>
+  <div class="div-sub">Resumen ejecutivo del periodo 2025</div>
+</div>
+
+<!-- ═══ 23: INDICADORES ═══ -->
+<div class="slide" data-i="23">
+  <div class="banner">Indicadores de la Operacion</div>
+  <div class="g3" style="margin-bottom:16px">
+    <div class="status-box" style="text-align:center">
+      <div style="font-size:40px;font-weight:900;color:var(--green)">254</div>
+      <div style="font-size:10px;color:var(--lime);text-transform:uppercase;letter-spacing:.6px;margin:6px 0">Unidades Senderos</div>
+      <div style="font-size:12px;color:var(--muted)">Vendidas 2019–2025</div>
+      <hr class="sep">
+      <span class="badge bg">Proyecto terminado</span>
+    </div>
+    <div class="status-box" style="text-align:center">
+      <div style="font-size:40px;font-weight:900;color:var(--cyan)">66</div>
+      <div style="font-size:10px;color:var(--lime);text-transform:uppercase;letter-spacing:.6px;margin:6px 0">Lotes Makari Campestre</div>
+      <div style="font-size:12px;color:var(--muted)">Vendidos 2022–2025</div>
+      <hr class="sep">
+      <span class="badge bc">Activo</span>
+    </div>
+    <div class="status-box" style="text-align:center">
+      <div style="font-size:40px;font-weight:900;color:var(--lime)">3.715</div>
+      <div style="font-size:10px;color:var(--lime);text-transform:uppercase;letter-spacing:.6px;margin:6px 0">m2 Reservas Amanai</div>
+      <div style="font-size:12px;color:var(--muted)">En tan solo 3 meses</div>
+      <hr class="sep">
+      <span class="badge by">Nuevo proyecto</span>
+    </div>
+  </div>
+  <div class="g3" style="flex:initial">
+    <div class="mc" style="text-align:center">
+      <div class="lbl">Proyectos activos</div>
+      <div class="val">3</div>
+      <div class="sub">Senderos · Campestre · Amanai</div>
+    </div>
+    <div class="mc" style="text-align:center">
+      <div class="lbl">Proyectos en desarrollo</div>
+      <div class="val">3</div>
+      <div class="sub">Tesalia · Makari Mall · HABITAT</div>
+    </div>
+    <div class="mc" style="text-align:center">
+      <div class="lbl">Proyectos en pausa</div>
+      <div class="val">2</div>
+      <div class="sub">Jardines de Makari · SKY Black</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- #wrap -->
+
+<script>
+const TOTAL = 27;
+let cur = 0;
+const slides = document.querySelectorAll('.slide');
+const pbar = document.getElementById('pbar');
+const counter = document.getElementById('counter');
+const btnP = document.getElementById('btnP');
+const btnN = document.getElementById('btnN');
+
+function go(n) {
+  if (n < 0 || n >= TOTAL) return;
+  const prev = slides[cur];
+  prev.classList.remove('active');
+  prev.classList.add('out-left');
+  setTimeout(() => prev.classList.remove('out-left'), 420);
+  cur = n;
+  slides[cur].classList.add('active');
+  update();
+  initChart(cur);
+}
+
+function update() {
+  pbar.style.width = ((cur + 1) / TOTAL * 100) + '%';
+  counter.textContent = (cur + 1) + ' / ' + TOTAL;
+  btnP.disabled = cur === 0;
+  btnN.disabled = cur === TOTAL - 1;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(cur + 1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
+});
+
+/* CHARTS */
+const inited = new Set();
+
+const axY = {
+  ticks: { color: '#aac', font: { family: 'Verdana', size: 10 },
+    callback: v => v >= 1e9 ? '$' + (v/1e9).toFixed(1) + 'B' : v >= 1e6 ? '$' + (v/1e6).toFixed(0) + 'M' : v },
+  grid: { color: 'rgba(255,255,255,0.07)' }
+};
+const axX = { ticks: { color: '#aac', font: { family: 'Verdana', size: 11 } }, grid: { color: 'rgba(255,255,255,0.07)' } };
+const axY2 = { position: 'right', ticks: { color: '#E4C383', font: { family: 'Verdana', size: 10 } }, grid: { drawOnChartArea: false } };
+
+const tooltip = {
+  backgroundColor: 'rgba(0,20,80,.96)', borderColor: '#00A2C9', borderWidth: 1,
+  titleColor: '#00A2C9', bodyColor: '#fff',
+  callbacks: { label: ctx => {
+    const v = ctx.parsed.y;
+    if (v > 1e6) return ' $' + (v/1e6).toFixed(0) + 'M';
+    return ' ' + v;
+  }}
+};
+const legend = { labels: { color: '#fff', font: { family: 'Verdana', size: 11 }, padding: 14 } };
+
+function initChart(idx) {
+  if (inited.has(idx)) return;
+  inited.add(idx);
+
+  if (idx === 9) {
+    new Chart(document.getElementById('c-senderos'), {
+      type: 'bar',
+      data: {
+        labels: ['2019','2020','2021','2022','2023','2024','2025'],
+        datasets: [
+          { label: 'Ventas COP', yAxisID: 'y', borderRadius: 4, borderWidth: 1.5,
+            backgroundColor: 'rgba(0,162,201,.72)', borderColor: '#00A2C9',
+            data: [2378466508,4159770701,5402775626,4545215562,722440280,1301455299,1132233028] },
+          { label: 'Unidades', type: 'line', yAxisID: 'y2', tension: .35,
+            pointRadius: 5, pointBackgroundColor: '#90C226',
+            borderColor: '#90C226', backgroundColor: 'rgba(144,194,38,.15)',
+            data: [35,60,71,62,9,10,7] }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, animation: { duration: 700 },
+        plugins: { legend, tooltip },
+        scales: { x: axX, y: axY, y2: axY2 } }
+    });
+  }
+
+  if (idx === 14) {
+    new Chart(document.getElementById('c-campestre'), {
+      type: 'bar',
+      data: {
+        labels: ['2022','2023','2024','2025'],
+        datasets: [
+          { label: 'Ventas COP', yAxisID: 'y', borderRadius: 5, borderWidth: 1.5,
+            backgroundColor: ['rgba(0,162,201,.7)','rgba(0,162,201,.7)','rgba(0,162,201,.7)','rgba(144,194,38,.85)'],
+            borderColor: ['#00A2C9','#00A2C9','#00A2C9','#90C226'],
+            data: [4719777053,1735117389,4595263549,7504052783] },
+          { label: 'Lotes', type: 'line', yAxisID: 'y2', tension: .3,
+            pointRadius: 6, pointBackgroundColor: '#E4C383',
+            borderColor: '#E4C383', backgroundColor: 'rgba(228,195,131,.15)',
+            data: [15,7,19,25] }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, animation: { duration: 700 },
+        plugins: { legend, tooltip },
+        scales: { x: axX, y: axY, y2: axY2 } }
+    });
+  }
+
+  if (idx === 17) {
+    new Chart(document.getElementById('c-amanai'), {
+      type: 'bar',
+      data: {
+        labels: ['Dic 2025','Ene 2026','Feb 2026'],
+        datasets: [
+          { label: 'Ventas COP', yAxisID: 'y', borderRadius: 6, borderWidth: 1.5,
+            backgroundColor: ['rgba(144,194,38,.82)','rgba(0,162,201,.75)','rgba(0,162,201,.6)'],
+            borderColor: ['#90C226','#00A2C9','#00A2C9'],
+            data: [4146429273,2051397636,1349580000] },
+          { label: 'm2 vendidos', type: 'line', yAxisID: 'y2', tension: .3,
+            pointRadius: 6, pointBackgroundColor: '#E4C383',
+            borderColor: '#E4C383', backgroundColor: 'rgba(228,195,131,.15)',
+            data: [2036,1019,660] }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, animation: { duration: 700 },
+        plugins: { legend, tooltip },
+        scales: { x: axX, y: axY, y2: axY2 } }
+    });
+  }
+
+  if (idx === 24) {
+    new Chart(document.getElementById('c-consol'), {
+      type: 'bar',
+      data: {
+        labels: ['Senderos de Makari\n2019–2025','Makari Campestre\n2022–2025','Reservas de Amanai\nDic 2025–Feb 2026'],
+        datasets: [{
+          label: 'Ventas totales COP',
+          data: [19642357004,18554210774,7547406909],
+          backgroundColor: ['rgba(0,176,80,.78)','rgba(0,162,201,.78)','rgba(144,194,38,.88)'],
+          borderColor: ['#00B050','#00A2C9','#90C226'],
+          borderWidth: 2, borderRadius: 6, borderSkipped: false
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, animation: { duration: 800 },
+        plugins: { legend: { display: false }, tooltip: {
+          backgroundColor: 'rgba(0,20,80,.96)', borderColor: '#00A2C9', borderWidth: 1,
+          titleColor: '#00A2C9', bodyColor: '#fff',
+          callbacks: { label: ctx => ' $' + (ctx.parsed.y/1e9).toFixed(2) + 'B COP' }
+        }},
+        scales: {
+          x: { ticks: { color: '#aac', font: { family: 'Verdana', size: 10 } }, grid: { color: 'rgba(255,255,255,0.07)' } },
+          y: axY
+        }
+      }
+    });
+  }
+}
+
+update();
+</script>
+</body>
+</html>
