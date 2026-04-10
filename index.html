@@ -174,67 +174,183 @@ hr.sep{border:none;border-top:1px solid rgba(255,255,255,.1);margin:10px 0}
 /* ===== RESPONSIVE MÓVIL ===== */
 @media (max-width:700px){
 
-  /* Slides: reduce padding, allow vertical scroll if content overflows */
-  .slide{padding:14px 14px 66px!important;overflow-y:auto!important;overflow-x:hidden!important}
+  /* ── BASE ── */
+  .slide{padding:12px 12px 68px!important;overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box!important}
 
-  /* PORTADA */
+  /* ── PORTADA ── */
   .cov-logo{width:54px;height:54px;font-size:18px;margin-bottom:12px}
-  .cov-tag{font-size:14px;padding:6px 18px;margin-bottom:10px}
-  .cov-title{font-size:26px;margin-bottom:10px}
-  .pills{margin-top:10px}
-  .pill{padding:5px 14px;font-size:12px}
+  .cov-tag{font-size:13px;padding:5px 16px;margin-bottom:8px}
+  .cov-title{font-size:24px;margin-bottom:10px}
+  .pills{margin-top:8px;flex-wrap:wrap;gap:6px}
+  .pill{padding:5px 12px;font-size:11px}
 
-  /* DIVISORES */
-  .div-num{font-size:52px}
-  .div-title{font-size:22px}
-  .div-sub{font-size:12px;margin-top:8px}
+  /* ── DIVISORES ── */
+  .div-num{font-size:48px}
+  .div-title{font-size:20px}
+  .div-sub{font-size:11px;margin-top:6px}
 
-  /* BANNER y sub */
-  .banner{font-size:13px;padding:5px 14px;margin-bottom:10px}
-  .sub{font-size:13px;margin-bottom:8px}
+  /* ── BANNER y sub ── */
+  .banner{font-size:12px!important;padding:5px 12px!important;margin-bottom:8px!important;white-space:normal!important}
+  .sub{font-size:12px!important;margin-bottom:6px!important}
 
-  /* GRIDS → una columna */
-  .g2,.g3{grid-template-columns:1fr!important;gap:10px}
-  .g4060{grid-template-columns:1fr!important;gap:10px}
+  /* ── GRIDS → 1 columna ── */
+  .g2,.g3{grid-template-columns:1fr!important;gap:8px!important}
+  .g4060{grid-template-columns:1fr!important;gap:8px!important}
 
-  /* METRIC CARDS → apilar */
-  .mrow{flex-direction:column;gap:8px;margin-bottom:10px}
-  .mc .val{font-size:16px}
-  .mc .lbl{font-size:9px}
+  /* ── METRIC CARDS → 2x2 ── */
+  .mrow{flex-wrap:wrap!important;gap:7px!important;margin-bottom:8px!important}
+  .mc{flex:1 1 44%!important;min-width:0!important;padding:10px 12px!important}
+  .mc .val{font-size:16px!important}
+  .mc .lbl{font-size:9px!important}
+  .mc .sub{font-size:10px!important}
 
-  /* TABLAS */
-  table.dt{font-size:11px}
-  table.dt thead th{padding:5px 7px;font-size:10px}
-  table.dt tbody td{padding:5px 7px}
+  /* ── TABLAS ── */
+  table.dt{font-size:11px!important}
+  table.dt thead th{padding:4px 6px!important;font-size:10px!important}
+  table.dt tbody td{padding:4px 6px!important}
 
-  /* AGENDA */
-  .agi{font-size:12px;padding:8px 10px;gap:10px}
-  .agi-n{width:24px;height:24px;font-size:11px;flex-shrink:0}
+  /* ── AGENDA ── */
+  .agi{font-size:12px;padding:7px 10px;gap:8px}
+  .agi-n{width:22px;height:22px;font-size:10px;flex-shrink:0}
 
-  /* IR rows (estados financieros) */
-  .ir{font-size:11px;padding:5px 8px}
-  .ir.sub2{font-size:10px;padding-left:18px}
+  /* ── IR rows ── */
+  .ir{font-size:11px!important;padding:4px 7px!important}
+  .ir.sub2{font-size:10px!important;padding-left:16px!important}
 
-  /* PROYECTO items */
-  .proj-item{padding:8px 12px;gap:10px}
+  /* ── PROYECTO items ── */
+  .proj-item{padding:7px 10px;gap:8px}
   .proj-item .pname{font-size:12px}
   .proj-item .ploc{font-size:10px}
 
-  /* ORG CHART + PROYECTOS (slide 4 merged) */
-  [data-i="4"] > div:last-child{
-    grid-template-columns:1fr 1fr!important;
-    gap:8px!important;
-    width:96%!important
-  }
+  /* ── FOTOS embebidas ── */
+  .photo-ph{min-height:0!important;padding:0!important}
+  .photo-ph img{width:100%!important;height:200px!important;object-fit:cover!important;border-radius:8px!important;display:block!important}
 
-  /* EEFF CONSOL: tabla con scroll horizontal */
+  /* ── EEFF CONSOL ── */
   .eeff-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
 
-  /* NAVEGACIÓN: botones más grandes para touch */
+  /* ── NAVEGACIÓN ── */
   .nbtn{width:44px;height:44px;font-size:18px}
-  #nav{bottom:12px;right:12px;gap:8px}
-  #counter{font-size:11px;min-width:38px}
-  #hint{bottom:12px;left:12px;font-size:10px}
+  #nav{bottom:10px;right:10px;gap:7px}
+  #counter{font-size:11px;min-width:36px}
+  #hint{bottom:10px;left:10px;font-size:10px}
+
+  /* ══════════════════════════════════════════════════════
+     SLIDE 4: ESTRUCTURA EMPRESARIAL
+     Layout absoluto → flujo vertical desplazable
+  ══════════════════════════════════════════════════════ */
+  [data-i="4"]{
+    overflow-y:auto!important;
+    background:#001845!important;
+    padding:10px 10px 70px!important;
+  }
+  /* Resetear absolutas → flujo */
+  [data-i="4"]>div{
+    position:relative!important;
+    left:auto!important;top:auto!important;
+    width:100%!important;height:auto!important;
+    min-height:0!important;max-height:none!important;
+    transform:none!important;
+    box-sizing:border-box!important;
+  }
+  /* Ocultar decorativos: fondo, espina, flechas, etiquetas pequeñas */
+  [data-i="4"]>div[style*="inset:0"],
+  [data-i="4"]>div[style*="calc(45%"],
+  [data-i="4"]>div[style*="height:2px"],
+  [data-i="4"]>div[style*="letter-spacing:1.5px"],
+  [data-i="4"]>div[style*="font-style:italic"]{
+    display:none!important;
+  }
+  /* Banner centrado */
+  [data-i="4"]>div[style*="left:50%"]{
+    display:flex!important;
+    justify-content:center!important;
+    transform:none!important;
+    white-space:normal!important;
+    text-align:center!important;
+    font-size:12px!important;
+    padding:5px 10px!important;
+    margin-bottom:8px!important;
+    border-radius:6px!important;
+  }
+  /* Cajas empresa */
+  [data-i="4"]>div[style*="border-radius:12px"]{
+    padding:8px 12px!important;
+    font-size:12px!important;
+    line-height:1.3!important;
+    margin-bottom:5px!important;
+    border-radius:8px!important;
+    text-align:left!important;
+  }
+  /* Chips de proyecto */
+  [data-i="4"]>div[style*="border-radius:9px"]{
+    padding:6px 10px!important;
+    margin-bottom:4px!important;
+    border-radius:7px!important;
+    width:calc(100% - 0px)!important;
+  }
+  [data-i="4"]>div[style*="border-radius:9px"]>div:first-child{
+    font-size:12px!important;
+    margin-bottom:2px!important;
+  }
+  [data-i="4"]>div[style*="border-radius:9px"] span[style*="border-radius:12px"]{
+    font-size:10px!important;
+    padding:2px 7px!important;
+  }
+  [data-i="4"]>div[style*="border-radius:9px"]>div:last-child>span:first-child{
+    font-size:10px!important;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     SLIDE 20: INDICADORES
+     Grid 3 cols → 1 col; KPIs 2x2
+  ══════════════════════════════════════════════════════ */
+  [data-i="20"]{
+    padding:10px 10px 70px!important;
+    overflow-y:auto!important;
+  }
+  /* Header */
+  [data-i="20"]>div:first-child{
+    flex-wrap:wrap!important;
+    gap:5px!important;
+    margin-bottom:8px!important;
+  }
+  [data-i="20"]>div:first-child span:first-child{
+    font-size:12px!important;
+    padding:4px 12px!important;
+  }
+  [data-i="20"]>div:first-child span:last-child{
+    font-size:10px!important;
+    border-left:none!important;
+    padding-left:0!important;
+  }
+  /* KPIs 2x2 */
+  [data-i="20"] .mrow{
+    flex-direction:row!important;
+    flex-wrap:wrap!important;
+    gap:6px!important;
+    margin-bottom:8px!important;
+  }
+  [data-i="20"] .mrow>.mc{
+    flex:1 1 44%!important;
+    min-width:0!important;
+    padding:8px 10px!important;
+  }
+  [data-i="20"] .mrow>.mc .val{font-size:14px!important}
+  [data-i="20"] .mrow>.mc .lbl,.mrow>.mc .sub{font-size:9px!important}
+  /* Grid 3 cols → 1 col */
+  [data-i="20"]>div[style*="grid-template-columns:1.1fr"]{
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+    flex:none!important;
+    min-height:0!important;
+    overflow:visible!important;
+  }
+  [data-i="20"]>div[style*="grid-template-columns:1.1fr"]>div{
+    min-height:0!important;
+    overflow:visible!important;
+  }
+  [data-i="20"] .ilist>.ir{font-size:10px!important;padding:3px 6px!important}
 }
 </style>
 </head>
