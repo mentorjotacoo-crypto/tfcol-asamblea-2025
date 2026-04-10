@@ -170,6 +170,76 @@ table.dt .tot td{background:rgba(0,162,201,.2)!important;
   font-size:13px;min-height:140px;flex:1}
 
 hr.sep{border:none;border-top:1px solid rgba(255,255,255,.1);margin:10px 0}
+
+/* ===== RESPONSIVE MÓVIL ===== */
+@media (max-width:700px){
+
+  /* Slides: reduce padding, allow vertical scroll if content overflows */
+  .slide{padding:14px 14px 66px!important;overflow-y:auto!important;overflow-x:hidden!important}
+
+  /* PORTADA */
+  .cov-logo{width:54px;height:54px;font-size:18px;margin-bottom:12px}
+  .cov-tag{font-size:14px;padding:6px 18px;margin-bottom:10px}
+  .cov-title{font-size:26px;margin-bottom:10px}
+  .pills{margin-top:10px}
+  .pill{padding:5px 14px;font-size:12px}
+
+  /* DIVISORES */
+  .div-num{font-size:52px}
+  .div-title{font-size:22px}
+  .div-sub{font-size:12px;margin-top:8px}
+
+  /* BANNER y sub */
+  .banner{font-size:13px;padding:5px 14px;margin-bottom:10px}
+  .sub{font-size:13px;margin-bottom:8px}
+
+  /* GRIDS → una columna */
+  .g2,.g3{grid-template-columns:1fr!important;gap:10px}
+  .g4060{grid-template-columns:1fr!important;gap:10px}
+
+  /* METRIC CARDS → apilar */
+  .mrow{flex-direction:column;gap:8px;margin-bottom:10px}
+  .mc .val{font-size:16px}
+  .mc .lbl{font-size:9px}
+
+  /* TABLAS */
+  table.dt{font-size:11px}
+  table.dt thead th{padding:5px 7px;font-size:10px}
+  table.dt tbody td{padding:5px 7px}
+
+  /* AGENDA */
+  .agi{font-size:12px;padding:8px 10px;gap:10px}
+  .agi-n{width:24px;height:24px;font-size:11px;flex-shrink:0}
+
+  /* IR rows (estados financieros) */
+  .ir{font-size:11px;padding:5px 8px}
+  .ir.sub2{font-size:10px;padding-left:18px}
+
+  /* PROYECTO items */
+  .proj-item{padding:8px 12px;gap:10px}
+  .proj-item .pname{font-size:12px}
+  .proj-item .ploc{font-size:10px}
+
+  /* ORG CHART (slide inline-style: estructura empresarial) */
+  [data-i="4"] > div:last-child{
+    grid-template-columns:1fr 1fr!important;
+    width:96%!important;
+    gap:10px!important
+  }
+  [data-i="4"] > div:nth-child(2){
+    /* h-line: full width */
+    width:96%!important
+  }
+
+  /* EEFF CONSOL: tabla con scroll horizontal */
+  .eeff-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
+
+  /* NAVEGACIÓN: botones más grandes para touch */
+  .nbtn{width:44px;height:44px;font-size:18px}
+  #nav{bottom:12px;right:12px;gap:8px}
+  #counter{font-size:11px;min-width:38px}
+  #hint{bottom:12px;left:12px;font-size:10px}
+}
 </style>
 </head>
 <body>
@@ -183,7 +253,7 @@ hr.sep{border:none;border-top:1px solid rgba(255,255,255,.1);margin:10px 0}
     box-shadow:0 0 0 10px rgba(0,162,201,.15);margin-bottom:8px">TF</div>
   <div style="font-size:22px;font-weight:700;color:#fff">TFCOL S.A.S</div>
   <div style="font-size:13px;color:rgba(255,255,255,.55);margin-bottom:6px">Informe de Gestion &mdash; Asamblea 2025</div>
-  <div style="display:flex;flex-direction:column;gap:10px;width:300px">
+  <div style="display:flex;flex-direction:column;gap:10px;width:min(300px,88vw)">
     <input id="pin" type="password" placeholder="Ingresa la clave de acceso"
       style="width:100%;padding:12px 16px;border-radius:8px;border:2px solid rgba(0,162,201,.4);
         background:rgba(255,255,255,.07);color:#fff;font-size:14px;font-family:Verdana,sans-serif;
@@ -228,7 +298,7 @@ window.addEventListener('DOMContentLoaded',function(){
   <button class="nbtn" id="btnP" onclick="go(cur-1)">&#8592;</button>
   <button class="nbtn" id="btnN" onclick="go(cur+1)">&#8594;</button>
 </div>
-<div id="hint">&#8592; &#8594; Teclas de flecha &nbsp;|&nbsp; Espacio = siguiente</div>
+<div id="hint">&#8592; &#8594; Teclas / desliza &nbsp;|&nbsp; Espacio = siguiente</div>
 
 <div id="wrap">
 
@@ -1048,6 +1118,21 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(cur + 1); }
   if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
 });
+
+/* Deslizar en móvil */
+(function(){
+  var sx=0,sy=0,threshold=45;
+  document.addEventListener('touchstart',function(e){
+    sx=e.touches[0].clientX; sy=e.touches[0].clientY;
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-sx;
+    var dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>threshold){
+      if(dx<0) go(cur+1); else go(cur-1);
+    }
+  },{passive:true});
+})();
 
 /* CHARTS */
 const inited = new Set();
