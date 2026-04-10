@@ -220,14 +220,10 @@ hr.sep{border:none;border-top:1px solid rgba(255,255,255,.1);margin:10px 0}
   .proj-item .pname{font-size:12px}
   .proj-item .ploc{font-size:10px}
 
-  /* ORG CHART (slide inline-style: estructura empresarial) */
+  /* ORG CHART + PROYECTOS (slide 4 merged) */
   [data-i="4"] > div:last-child{
     grid-template-columns:1fr 1fr!important;
-    width:96%!important;
-    gap:10px!important
-  }
-  [data-i="4"] > div:nth-child(2){
-    /* h-line: full width */
+    gap:8px!important;
     width:96%!important
   }
 
@@ -294,7 +290,7 @@ window.addEventListener('DOMContentLoaded',function(){
 
 <div id="pbar"></div>
 <div id="nav">
-  <span id="counter">1 / 23</span>
+  <span id="counter">1 / 22</span>
   <button class="nbtn" id="btnP" onclick="go(cur-1)">&#8592;</button>
   <button class="nbtn" id="btnN" onclick="go(cur+1)">&#8594;</button>
 </div>
@@ -411,239 +407,201 @@ window.addEventListener('DOMContentLoaded',function(){
   </div>
 </div>
 
-<!-- ═══ 2: ESTRUCTURA EMPRESARIAL ═══ -->
-<div class="slide" data-i="4" style="background:#002060;padding:0;overflow:hidden">
+<!-- ═══ 2+3: ESTRUCTURA EMPRESARIAL + ESTADO PROYECTOS ═══ -->
+<div class="slide" data-i="4" style="padding:22px 36px 38px;
+  background:radial-gradient(ellipse at 50% -10%,#003898 0%,#002060 65%)">
 
-  <!-- BANNER -->
-  <div style="position:absolute;left:24.6%;top:6.9%;width:42.1%;height:7.6%;
-    display:flex;align-items:center;justify-content:center;
-    background:var(--cyan);color:var(--navy);font-size:2.2vh;font-weight:700;letter-spacing:.4px;
-    border-radius:3px 22px 22px 3px">
-    Estructura Empresarial
-  </div>
-
-  <!-- ESPINA VERTICAL -->
-  <div style="position:absolute;left:calc(45.7% - 1px);top:15.9%;width:2px;height:77.7%;
-    background:var(--cyan)"></div>
-
-  <!-- ──── LADO IZQUIERDO: TFCOL S.A.S ──── -->
-  <div style="position:absolute;left:4.3%;top:32.5%;width:14.5%;height:12.9%;
-    background:var(--olive);border-radius:7px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.5vh;font-weight:700;line-height:1.35;
-    border:1px solid rgba(255,255,255,.18);box-shadow:0 4px 14px rgba(0,0,0,.35)">
-    TFCOL S.A.S
-  </div>
-  <!-- flecha derecha desde TFCOL S.A.S -->
-  <div style="position:absolute;left:18.8%;top:calc(32.5% + 6.45% - 1px);
-    width:7.7%;height:2px;background:var(--lime)">
-    <div style="position:absolute;right:-5px;top:-4px;border-top:5px solid transparent;
-      border-bottom:5px solid transparent;border-left:6px solid var(--lime)"></div>
+  <!-- ENCABEZADO -->
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+    <span style="display:inline-block;background:var(--cyan);color:var(--navy);
+      font-weight:700;font-size:17px;padding:6px 26px;
+      border-radius:3px 18px 18px 3px;letter-spacing:.3px;flex-shrink:0">
+      Estructura Empresarial
+    </span>
+    <span style="font-size:11px;color:var(--muted);border-left:2px solid rgba(255,255,255,.15);
+      padding-left:14px">
+      Estado de proyectos &middot; Corte 2025
+    </span>
   </div>
 
-  <!-- ──── LADO IZQUIERDO: TFCOL HABITAT ──── -->
-  <div style="position:absolute;left:7.4%;top:61.8%;width:9.2%;
-    font-size:1.1vh;color:var(--muted);font-style:italic;text-align:center">
-    100% TFCOL
-  </div>
-  <div style="position:absolute;left:4.9%;top:68%;width:14.5%;height:12.9%;
-    background:var(--olive);border-radius:7px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.3vh;font-weight:700;line-height:1.35;
-    border:1px solid rgba(255,255,255,.18);box-shadow:0 4px 14px rgba(0,0,0,.35)">
-    TFCOL<br>HABITAT S.A.S
-  </div>
-  <!-- flecha derecha desde HABITAT -->
-  <div style="position:absolute;left:19.4%;top:calc(68% + 6.45% - 1px);
-    width:7%;height:2px;background:var(--lime)">
-    <div style="position:absolute;right:-5px;top:-4px;border-top:5px solid transparent;
-      border-bottom:5px solid transparent;border-left:6px solid var(--lime)"></div>
-  </div>
-
-  <!-- ──── CENTRO-IZQ: Proyectos de TFCOL S.A.S (Senderos, Jardines, Reservas) ──── -->
-  <div style="position:absolute;left:26.5%;top:25.7%;width:16.9%;height:7.4%;
-    background:var(--cyan);color:var(--navy);border-radius:5px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.3vh;font-weight:700">
-    Senderos de Makari
-  </div>
-  <div style="position:absolute;left:26.3%;top:35.3%;width:16.9%;height:7.4%;
-    background:var(--cyan);color:var(--navy);border-radius:5px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.3vh;font-weight:700">
-    Jardines de Makari
-  </div>
-  <div style="position:absolute;left:26.4%;top:44.2%;width:16.9%;height:7.4%;
-    background:var(--cyan);color:var(--navy);border-radius:5px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.2vh;font-weight:700;line-height:1.3">
-    Reservas de Amanai<br><span style="font-size:.9vh;font-weight:600">5% participación</span>
-  </div>
-
-  <!-- ──── CENTRO-IZQ: Proyectos de TFCOL HABITAT ──── -->
-  <div style="position:absolute;left:26.5%;top:64.3%;width:16.9%;height:7.4%;
-    background:var(--cyan);color:var(--navy);border-radius:5px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.3vh;font-weight:700">
-    Estudios y diseños
-  </div>
-  <div style="position:absolute;left:26.7%;top:75.6%;width:16.9%;height:7.4%;
-    background:var(--cyan);color:var(--navy);border-radius:5px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.3vh;font-weight:700">
-    Construcción viviendas
-  </div>
-
-  <!-- ──── LADO DERECHO: NUDO CONSTRUCCIONES ──── -->
-  <div style="position:absolute;left:52.6%;top:22.7%;width:9.2%;
-    font-size:1.1vh;color:var(--muted);font-style:italic;text-align:center">
-    100% TFCOL
-  </div>
-  <div style="position:absolute;left:49.9%;top:27%;width:14.5%;height:12.9%;
-    background:var(--olive);border-radius:7px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.2vh;font-weight:700;line-height:1.35;
-    border:1px solid rgba(255,255,255,.18);box-shadow:0 4px 14px rgba(0,0,0,.35)">
-    NUDO<br>CONSTRUCCIONES<br>S.A.S
-  </div>
-  <!-- flecha NUDO → Makari Campestre -->
-  <div style="position:absolute;left:64.4%;top:calc(27% + 6.45% - 1px);
-    width:12.3%;height:2px;background:var(--lime)">
-    <div style="position:absolute;right:-5px;top:-4px;border-top:5px solid transparent;
-      border-bottom:5px solid transparent;border-left:6px solid var(--lime)"></div>
-  </div>
-
-  <!-- ──── LADO DERECHO: KALKULO S.A.S ──── -->
-  <div style="position:absolute;left:52.6%;top:44.3%;width:9.2%;
-    font-size:1.1vh;color:var(--muted);font-style:italic;text-align:center">
-    100% TFCOL
-  </div>
-  <div style="position:absolute;left:50%;top:48.4%;width:14.5%;height:12.9%;
-    background:var(--olive);border-radius:7px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.5vh;font-weight:700;line-height:1.35;
-    border:1px solid rgba(255,255,255,.18);box-shadow:0 4px 14px rgba(0,0,0,.35)">
-    KALKULO S.A.S
-  </div>
-  <!-- flecha KALKULO → Tesalia -->
-  <div style="position:absolute;left:64.5%;top:calc(48.4% + 6.45% - 1px);
-    width:12.2%;height:2px;background:var(--lime)">
-    <div style="position:absolute;right:-5px;top:-4px;border-top:5px solid transparent;
-      border-bottom:5px solid transparent;border-left:6px solid var(--lime)"></div>
-  </div>
-
-  <!-- ──── LADO DERECHO: MAKARI MALL ──── -->
-  <div style="position:absolute;left:52.2%;top:66.9%;width:9.2%;
-    font-size:1.1vh;color:var(--gold);font-style:italic;font-weight:700;text-align:center">
-    Mixto
-  </div>
-  <div style="position:absolute;left:49.9%;top:71.4%;width:14.5%;height:12.9%;
-    background:linear-gradient(135deg,#3d5a00,var(--olive));border-radius:7px;
-    border:2px solid var(--gold);
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.2vh;font-weight:700;line-height:1.35;
-    box-shadow:0 4px 14px rgba(0,0,0,.35)">
-    MAKARI MALL S.A.S
-  </div>
-  <!-- flecha MAKARI MALL → chip -->
-  <div style="position:absolute;left:64.4%;top:calc(71.4% + 6.45% - 1px);
-    width:12.3%;height:2px;background:var(--lime)">
-    <div style="position:absolute;right:-5px;top:-4px;border-top:5px solid transparent;
-      border-bottom:5px solid transparent;border-left:6px solid var(--lime)"></div>
-  </div>
-
-  <!-- ──── DERECHA: Proyectos de empresas derechas ──── -->
-  <div style="position:absolute;left:75.8%;top:29.2%;width:16.9%;height:7.4%;
-    background:var(--cyan);color:var(--navy);border-radius:5px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.3vh;font-weight:700">
-    Makari Campestre
-  </div>
-  <div style="position:absolute;left:75.8%;top:51.2%;width:16.9%;height:7.4%;
-    background:var(--cyan);color:var(--navy);border-radius:5px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.3vh;font-weight:700">
-    Tesalia
-  </div>
-  <div style="position:absolute;left:75.8%;top:73.4%;width:16.9%;height:7.4%;
-    background:var(--cyan);color:var(--navy);border-radius:5px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:1.3vh;font-weight:700">
-    Makari Mall
-  </div>
-
-  <!-- MAKARI MALL ownership: 60% KALKULO / 40% MTG -->
-  <div style="position:absolute;left:84.2%;top:58%;width:10%;
-    font-size:1.0vh;color:var(--muted);text-align:center;line-height:1.8">
-    <span style="color:var(--lime);font-weight:700;font-size:1.2vh">60%</span> KALKULO S.A.S<br>
-    <span style="color:var(--gold);font-weight:700;font-size:1.2vh">40%</span> MTG S.A.S
-  </div>
-  <!-- Llave / brace Operación -->
-  <div style="position:absolute;left:93.5%;top:58.5%;width:1px;height:8%;
-    border-left:2px solid var(--muted);border-top:2px solid var(--muted);
-    border-bottom:2px solid var(--muted)"></div>
-  <div style="position:absolute;left:75.1%;top:63.5%;
-    font-size:1.0vh;color:var(--muted);font-style:italic">
-    Operación
-  </div>
-
-</div>
-<!-- ═══ 3: PROYECTOS OVERVIEW ═══ -->
-<div class="slide" data-i="5">
-  <div class="banner">Proyectos — Estado Actual</div>
-  <div class="g2">
-    <div class="col">
-      <div class="proj-item">
-        <span style="font-size:22px">&#127968;</span>
-        <div><div class="pname">Senderos de Makari</div><div class="ploc">Dosquebradas</div></div>
-        <span class="badge bg">Terminando</span>
-      </div>
-      <div class="proj-item">
-        <span style="font-size:22px">&#127956;</span>
-        <div><div class="pname">Makari Campestre</div><div class="ploc">Dosquebradas</div></div>
-        <span class="badge bg">En Construcción</span>
-      </div>
-      <div class="proj-item" style="border-left-color:var(--gold)">
-        <span style="font-size:22px">&#10024;</span>
-        <div><div class="pname">Reservas de Amanai</div><div class="ploc">Dosquebradas — <strong>Nuevo Proyecto</strong></div></div>
-        <span class="badge by">Nuevo</span>
-      </div>
-      <div class="proj-item">
-        <span style="font-size:22px">&#127958;</span>
-        <div><div class="pname">TFCOL HABITAT S.A.S</div><div class="ploc">Estudios y disenos</div></div>
-        <span class="badge bc">Activo</span>
-      </div>
-    </div>
-    <div class="col">
-      <div class="proj-item">
-        <span style="font-size:22px">&#127968;</span>
-        <div><div class="pname">Jardines de Makari</div><div class="ploc">Viterbo</div></div>
-        <span class="badge br">Pausa</span>
-      </div>
-      <div class="proj-item">
-        <span style="font-size:22px">&#127807;</span>
-        <div><div class="pname">Tesalia Campestre</div><div class="ploc">Belalcazar</div></div>
-        <span class="badge by">Estudios</span>
-      </div>
-      <div class="proj-item">
-        <span style="font-size:22px">&#127978;</span>
-        <div><div class="pname">Makari Mall</div><div class="ploc">Dosquebradas</div></div>
-        <span class="badge by">Fase Ventas</span>
-      </div>
-
+  <!-- ROOT: TFCOL S.A.S -->
+  <div style="display:flex;justify-content:center;margin-bottom:0;position:relative">
+    <div style="position:relative;background:linear-gradient(135deg,#003898,#0055c8);
+      border:2px solid var(--cyan);border-radius:12px;
+      padding:11px 56px;font-size:19px;font-weight:900;letter-spacing:.6px;
+      box-shadow:0 0 0 6px rgba(0,162,201,.13),0 8px 22px rgba(0,0,0,.45)">
+      TFCOL S.A.S
+      <div style="position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);
+        width:2px;height:18px;background:var(--cyan)"></div>
     </div>
   </div>
+
+  <!-- LÍNEA HORIZONTAL CON 4 RAMAS -->
+  <div style="position:relative;height:2px;background:var(--cyan);
+    width:90%;margin:18px auto 0">
+    <div style="position:absolute;top:0;left:calc(12.5% - 1px);width:2px;height:14px;background:var(--cyan)"></div>
+    <div style="position:absolute;top:0;left:calc(37.5% - 1px);width:2px;height:14px;background:var(--cyan)"></div>
+    <div style="position:absolute;top:0;left:calc(62.5% - 1px);width:2px;height:14px;background:var(--cyan)"></div>
+    <div style="position:absolute;top:0;left:calc(87.5% - 1px);width:2px;height:14px;background:var(--cyan)"></div>
+  </div>
+
+  <!-- 4 COLUMNAS DE SUBSIDIARIAS -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;
+    width:90%;margin:14px auto 0;flex:1;min-height:0">
+
+    <!-- ── TFCOL HABITAT S.A.S ── -->
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <div style="background:linear-gradient(160deg,#4a6a0a,var(--olive));
+        border-radius:10px;padding:11px 10px;text-align:center;
+        font-size:12.5px;font-weight:700;line-height:1.35;
+        border:1px solid rgba(255,255,255,.2);
+        box-shadow:0 4px 16px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08)">
+        TFCOL<br>HABITAT S.A.S
+      </div>
+      <div style="font-size:10px;color:var(--muted);font-style:italic;text-align:center;
+        letter-spacing:.3px">100% TFCOL</div>
+      <div style="display:flex;flex-direction:column;gap:5px;flex:1">
+        <div style="background:rgba(0,162,201,.13);border:1px solid rgba(0,162,201,.3);
+          border-radius:7px;padding:7px 9px">
+          <div style="font-size:11.5px;font-weight:700;margin-bottom:4px">Estudios y diseños</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted)">Dosquebradas</span>
+            <span style="background:var(--cyan);color:var(--navy);padding:1px 8px;
+              border-radius:10px;font-size:9px;font-weight:700">Activo</span>
+          </div>
+        </div>
+        <div style="background:rgba(0,162,201,.13);border:1px solid rgba(0,162,201,.3);
+          border-radius:7px;padding:7px 9px">
+          <div style="font-size:11.5px;font-weight:700;line-height:1.3">
+            Construcción<br>viviendas</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── NUDO CONSTRUCCIONES S.A.S ── -->
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <div style="background:linear-gradient(160deg,#4a6a0a,var(--olive));
+        border-radius:10px;padding:11px 10px;text-align:center;
+        font-size:12px;font-weight:700;line-height:1.35;
+        border:1px solid rgba(255,255,255,.2);
+        box-shadow:0 4px 16px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08)">
+        NUDO<br>CONSTRUCCIONES<br>S.A.S
+      </div>
+      <div style="font-size:10px;color:var(--muted);font-style:italic;text-align:center;
+        letter-spacing:.3px">100% TFCOL</div>
+      <div style="display:flex;flex-direction:column;gap:5px;flex:1">
+        <!-- Senderos -->
+        <div style="background:rgba(0,176,80,.11);border:1px solid rgba(0,176,80,.32);
+          border-radius:7px;padding:7px 9px">
+          <div style="font-size:11.5px;font-weight:700;margin-bottom:4px">Senderos de Makari</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted)">Dosquebradas</span>
+            <span style="background:var(--green);color:#fff;padding:1px 7px;
+              border-radius:10px;font-size:9px;font-weight:700">Terminando</span>
+          </div>
+        </div>
+        <!-- Jardines -->
+        <div style="background:rgba(192,0,0,.11);border:1px solid rgba(192,0,0,.32);
+          border-radius:7px;padding:7px 9px">
+          <div style="font-size:11.5px;font-weight:700;margin-bottom:4px">Jardines de Makari</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted)">Viterbo</span>
+            <span style="background:#C00000;color:#fff;padding:1px 7px;
+              border-radius:10px;font-size:9px;font-weight:700">Pausa</span>
+          </div>
+        </div>
+        <!-- Reservas -->
+        <div style="background:rgba(228,195,131,.11);border:1px solid rgba(228,195,131,.35);
+          border-radius:7px;padding:7px 9px">
+          <div style="font-size:11.5px;font-weight:700;margin-bottom:4px">Reservas de Amanai</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted)">Dosquebradas</span>
+            <span style="background:var(--gold);color:var(--navy);padding:1px 7px;
+              border-radius:10px;font-size:9px;font-weight:700">Nuevo ✶</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── KALKULO S.A.S ── -->
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <div style="background:linear-gradient(160deg,#4a6a0a,var(--olive));
+        border-radius:10px;padding:11px 10px;text-align:center;
+        font-size:13px;font-weight:700;line-height:1.35;
+        border:1px solid rgba(255,255,255,.2);
+        box-shadow:0 4px 16px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08)">
+        KALKULO S.A.S
+      </div>
+      <div style="font-size:10px;color:var(--muted);font-style:italic;text-align:center;
+        letter-spacing:.3px">100% TFCOL</div>
+      <div style="display:flex;flex-direction:column;gap:5px;flex:1">
+        <!-- Makari Campestre -->
+        <div style="background:rgba(0,176,80,.11);border:1px solid rgba(0,176,80,.32);
+          border-radius:7px;padding:7px 9px">
+          <div style="font-size:11.5px;font-weight:700;margin-bottom:4px">Makari Campestre</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted)">Dosquebradas</span>
+            <span style="background:var(--green);color:#fff;padding:1px 7px;
+              border-radius:10px;font-size:9px;font-weight:700">En Construcción</span>
+          </div>
+        </div>
+        <!-- Tesalia -->
+        <div style="background:rgba(228,195,131,.11);border:1px solid rgba(228,195,131,.35);
+          border-radius:7px;padding:7px 9px">
+          <div style="font-size:11.5px;font-weight:700;margin-bottom:4px">Tesalia Campestre</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted)">Belalcázar</span>
+            <span style="background:var(--gold);color:var(--navy);padding:1px 7px;
+              border-radius:10px;font-size:9px;font-weight:700">Estudios</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MAKARI MALL S.A.S ── -->
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <div style="background:linear-gradient(160deg,#4a5a00,#606a10);
+        border-radius:10px;padding:11px 10px;text-align:center;
+        font-size:12.5px;font-weight:700;line-height:1.35;
+        border:2px solid var(--gold);
+        box-shadow:0 4px 20px rgba(228,195,131,.2),inset 0 1px 0 rgba(255,255,255,.08)">
+        MAKARI MALL S.A.S
+      </div>
+      <div style="font-size:10px;color:var(--gold);font-style:italic;text-align:center;
+        font-weight:700;letter-spacing:.3px">Sociedad Mixta</div>
+      <!-- Composicion accionaria -->
+      <div style="background:rgba(228,195,131,.09);border:1px solid rgba(228,195,131,.28);
+        border-radius:8px;padding:9px 10px;text-align:center;line-height:1.75">
+        <span style="color:var(--lime);font-weight:700;font-size:14px">60%</span>
+        <span style="color:var(--muted);font-size:10px"> KALKULO S.A.S</span><br>
+        <span style="color:rgba(255,255,255,.18);font-size:10px">―――――</span><br>
+        <span style="color:var(--gold);font-weight:700;font-size:14px">40%</span>
+        <span style="color:var(--muted);font-size:10px"> MTG S.A.S</span>
+      </div>
+      <!-- Makari Mall proyecto -->
+      <div style="background:rgba(228,195,131,.11);border:1px solid rgba(228,195,131,.35);
+        border-radius:7px;padding:7px 9px">
+        <div style="font-size:11.5px;font-weight:700;margin-bottom:4px">Makari Mall</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:10px;color:var(--muted)">Dosquebradas</span>
+          <span style="background:var(--gold);color:var(--navy);padding:1px 7px;
+            border-radius:10px;font-size:9px;font-weight:700">Fase Ventas</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
 </div>
 
 <!-- ═══ 4: DIVIDER SENDEROS ═══ -->
-<div class="slide slide-div" data-i="6">
+<div class="slide slide-div" data-i="5">
   <div class="div-num">01</div>
   <div class="div-title">Senderos de Makari</div>
   <div class="div-sub">Dosquebradas &nbsp;·&nbsp; NUDO CONSTRUCCIONES S.A.S &nbsp;·&nbsp; 100% TFCOL</div>
 </div>
 
 <!-- ═══ 5: SENDEROS STATUS ═══ -->
-<div class="slide" data-i="7">
+<div class="slide" data-i="6">
   <div class="banner">Senderos de Makari</div>
   <div class="mrow">
     <div class="mc">
@@ -692,7 +650,7 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <!-- ═══ 6: SENDEROS COMERCIAL ═══ -->
-<div class="slide" data-i="8">
+<div class="slide" data-i="7">
   <div class="banner">Senderos de Makari</div>
   <div class="sub">Gestion Comercial 2019–2025</div>
   <div class="g4060">
@@ -717,14 +675,14 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <!-- ═══ 7: DIVIDER MAKARI CAMPESTRE ═══ -->
-<div class="slide slide-div" data-i="9">
+<div class="slide slide-div" data-i="8">
   <div class="div-num">02</div>
   <div class="div-title">Makari Campestre</div>
   <div class="div-sub">Dosquebradas &nbsp;·&nbsp; KALKULO S.A.S &nbsp;·&nbsp; 100% TFCOL</div>
 </div>
 
 <!-- ═══ 8: MAKARI CAMPESTRE COMERCIAL ═══ -->
-<div class="slide" data-i="10">
+<div class="slide" data-i="9">
   <div class="banner">Makari Campestre</div>
   <div class="sub">Gestion Comercial 2022–2025</div>
   <div class="g4060">
@@ -757,7 +715,7 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <!-- ═══ 9: CASA MODELO ═══ -->
-<div class="slide" data-i="11">
+<div class="slide" data-i="10">
   <div class="banner">Makari Campestre — Casa Modelo</div>
   <div class="g2">
     <div class="col">
@@ -793,14 +751,14 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <!-- ═══ 10: DIVIDER RESERVAS ═══ -->
-<div class="slide slide-div" data-i="12">
+<div class="slide slide-div" data-i="11">
   <div class="div-num">03</div>
   <div class="div-title">Reservas de Amanai</div>
   <div class="div-sub">Dosquebradas &nbsp;·&nbsp; Nuevo Proyecto &nbsp;·&nbsp; TFCOL 5% &nbsp;·&nbsp; Lanzamiento Dic 2025</div>
 </div>
 
 <!-- ═══ 11: RESERVAS COMERCIAL ═══ -->
-<div class="slide" data-i="13">
+<div class="slide" data-i="12">
   <div class="banner">Reservas de Amanai</div>
   <div class="sub">Gestion Comercial — Dic 2025 a Feb 2026</div>
   <div class="mrow">
@@ -844,14 +802,14 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <!-- ═══ 12: DIVIDER JARDINES ═══ -->
-<div class="slide slide-div" data-i="14">
+<div class="slide slide-div" data-i="13">
   <div class="div-num">04</div>
   <div class="div-title">Jardines de Makari</div>
   <div class="div-sub">Viterbo &nbsp;·&nbsp; NUDO CONSTRUCCIONES S.A.S &nbsp;·&nbsp; 100% TFCOL</div>
 </div>
 
 <!-- ═══ 13: JARDINES ═══ -->
-<div class="slide" data-i="15">
+<div class="slide" data-i="14">
   <div class="banner">Jardines de Makari</div>
   <div class="g2">
     <div class="col">
@@ -896,14 +854,14 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <!-- ═══ 14: DIVIDER TESALIA ═══ -->
-<div class="slide slide-div" data-i="16">
+<div class="slide slide-div" data-i="15">
   <div class="div-num">05</div>
   <div class="div-title">Tesalia Campestre</div>
   <div class="div-sub">Belalcazar &nbsp;·&nbsp; KALKULO S.A.S &nbsp;·&nbsp; Fase de Estudios</div>
 </div>
 
 <!-- ═══ 15: TESALIA ═══ -->
-<div class="slide" data-i="17">
+<div class="slide" data-i="16">
   <div class="banner">Tesalia Campestre</div>
   <div class="g2">
     <div class="col">
@@ -943,14 +901,14 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <!-- ═══ 16: DIVIDER MAKARI MALL ═══ -->
-<div class="slide slide-div" data-i="18">
+<div class="slide slide-div" data-i="17">
   <div class="div-num">06</div>
   <div class="div-title">Makari Mall</div>
   <div class="div-sub">Dosquebradas &nbsp;·&nbsp; MAKARI MALL S.A.S &nbsp;·&nbsp; 60% KALKULO / 40% MTG</div>
 </div>
 
 <!-- ═══ 17: MAKARI MALL ═══ -->
-<div class="slide" data-i="19">
+<div class="slide" data-i="18">
   <div class="banner">Makari Mall</div>
   <div class="g2">
     <div class="col">
@@ -981,7 +939,7 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <!-- ═══ 21: CONSOLIDADO DE VENTAS ═══ -->
-<div class="slide" data-i="20">
+<div class="slide" data-i="19">
   <div class="banner">Consolidado de Ventas — Todos los Proyectos</div>
   <div class="mrow">
     <div class="mc">
@@ -1009,14 +967,14 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <!-- ═══ 22: DIVIDER INDICADORES ═══ -->
-<div class="slide slide-div" data-i="21">
+<div class="slide slide-div" data-i="20">
   <div class="div-num">08</div>
   <div class="div-title">Indicadores de la Operacion</div>
   <div class="div-sub">Resumen ejecutivo del periodo 2025</div>
 </div>
 
 <!-- ═══ 23: INDICADORES ═══ -->
-<div class="slide" data-i="22">
+<div class="slide" data-i="21">
   <div class="banner">Indicadores de la Operacion</div>
   <div class="g3" style="margin-bottom:16px">
     <div class="status-box" style="text-align:center">
@@ -1063,7 +1021,7 @@ window.addEventListener('DOMContentLoaded',function(){
 </div><!-- #wrap -->
 
 <script>
-const TOTAL = 23;
+const TOTAL = 22;
 let cur = 0;
 const slides = document.querySelectorAll('.slide');
 const pbar = document.getElementById('pbar');
@@ -1136,7 +1094,7 @@ function initChart(idx) {
   if (inited.has(idx)) return;
   inited.add(idx);
 
-  if (idx === 8) {
+  if (idx === 7) {
     new Chart(document.getElementById('c-senderos'), {
       type: 'bar',
       data: {
@@ -1157,7 +1115,7 @@ function initChart(idx) {
     });
   }
 
-  if (idx === 10) {
+  if (idx === 9) {
     new Chart(document.getElementById('c-campestre'), {
       type: 'bar',
       data: {
@@ -1179,7 +1137,7 @@ function initChart(idx) {
     });
   }
 
-  if (idx === 13) {
+  if (idx === 12) {
     new Chart(document.getElementById('c-amanai'), {
       type: 'bar',
       data: {
@@ -1201,7 +1159,7 @@ function initChart(idx) {
     });
   }
 
-  if (idx === 20) {
+  if (idx === 19) {
     new Chart(document.getElementById('c-consol'), {
       type: 'bar',
       data: {
